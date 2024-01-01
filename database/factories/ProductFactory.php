@@ -2,19 +2,25 @@
 
 namespace Database\Factories;
 
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 class ProductFactory extends Factory
 {
+    protected $model = Product::class;
+
     public function definition(): array
     {
         return [
             'name' => fake()->name(),
-            'cost' => fake()->randomFloat(2, 1, 100),
-            'saleCost' => fake()->randomFloat(2, 1, 100),
-            'quantity' => fake()->numberBetween(1, 100),
+            'cost' => fake()->randomFloat(2, 0, 100),
+            'saleCost' => fake()->randomFloat(2, 0, 100),
+            'quantity' => fake()->randomNumber(2),
             'description' => fake()->text(),
-            'image' => fake()->imageUrl(640, 480, 'cats')
+            'image' => fake()->imageUrl(),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
         ];
     }
 }
