@@ -1,0 +1,62 @@
+body{
+    background:#eee
+}
+.ratings i{
+    font-size: 16px;
+    color: #ffdd00
+}
+.strike-text{
+    color: red;
+    text-decoration: line-through
+}
+.product-image{
+    width: 100%
+}
+.dot{
+    height: 7px;
+    width: 7px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 3px;
+    background-color: blue;
+    border-radius: 50%;
+    display: inline-block
+}
+.spec-1{
+    color: #938787;
+    font-size: 15px
+}
+h5{
+    font-weight: 400
+}
+.para{
+    font-size: 16px
+}
+
+.border-left{border-left:1px solid #dee2e6!important}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/*.fill {*/
+/*    width: 100px;*/
+/*    height: 100px;*/
+/*    overflow: hidden;*/
+/*    position: relative;*/
+/*    background: rgba(0, 0, 0, 0.5);*/
+/*    margin: 10px 0;*/
+/*}*/
+/*.fill img {*/
+/*    width: 100%;*/
+/*    min-height: 100%;*/
+/*    position: absolute;*/
+/*    left: 0;*/
+/*    top: 50%;*/
+/*    transform: translateY(-50%);*/
+/*}*/
+
