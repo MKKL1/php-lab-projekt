@@ -25,3 +25,4 @@ Route::get('/', function () {
 
 Route::get('products', [ProductController::class, 'paginate'])->name('products');
 Route::get('product/{productId}', [ProductController::class, 'show'])->name('product');
+Route::get('cart/{cartId}', 'App\Http\Controllers\CartController@show');

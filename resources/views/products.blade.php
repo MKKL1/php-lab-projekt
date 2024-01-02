@@ -43,7 +43,7 @@
                                             <h4 class="mr-1">{{$product->cost}}zł</h4>
                                         @endif
                                     </div>
-                                    <h6 class="text-success">Darmowa dostawa</h6>
+                                    <h6 class="text-success">Darmowa dostawa od 30zł</h6>
                                     <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" href="{{route('product', ['productId' => $product])}}" type="button">Dodaj do koszyka</a></div>
                                 </div>
                             </div>
