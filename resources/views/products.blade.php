@@ -10,19 +10,20 @@
             <div class="col-md-10">
                 <div id="shopProducts">
 
-                    @foreach($products as $product)
-
+                    @foreach($paginator as $product)
                         <div class="col">
                             <div class="row p-2 bg-white border rounded mt-2">
                                 <div class="col-md-3 mt-1 fill">
+                                    <a href="{{route('product', ['productId' => $product])}}">
                                     @if($product->image)
                                         <img class="img-fluid img-responsive rounded product-image" src="{{$product->image}}" alt="Product">
                                     @else
                                         <img class="img-fluid img-responsive rounded product-image" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Product">
                                     @endif
+                                    </a>
                                 </div>
                                 <div class="col-md-6 mt-1">
-                                    <h5>{{$product->name}}</h5>
+                                    <a href="{{route('product', ['productId' => $product])}}"><h5>{{$product->name}}</h5></a>
                                     <div class="d-flex flex-row">
                 {{--                        {{#if product_rating}}--}}
                 {{--                        <div class="ratings mr-2">--}}
@@ -43,17 +44,15 @@
                                         @endif
                                     </div>
                                     <h6 class="text-success">Darmowa dostawa</h6>
-                                    <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" type="button">Dodaj do koszyka</a></div>
+                                    <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" href="{{route('product', ['productId' => $product])}}" type="button">Dodaj do koszyka</a></div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center" id="shopPagination">
 
-                    </ul>
-                </nav>
+                {{ $paginator->links('pagination.default') }}
+
             </div>
 
         </div>

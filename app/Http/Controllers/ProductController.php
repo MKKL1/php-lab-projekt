@@ -13,6 +13,11 @@ class ProductController extends Controller
         return view('products', ['products' => Product::all()]);
     }
 
+    public function paginate(Request $request) {
+        $page = $request->input('page', 1);
+        return view('products', ['paginator' => Product::paginate(3, ['*'], 'page', $page)]);
+    }
+
 //    public function store(Request $request)
 //    {
 //        $data = $request->validate([
@@ -27,8 +32,9 @@ class ProductController extends Controller
 //        return new ProductResource(Product::create($data));
 //    }
 
-    public function show(Product $product)
+    public function show($productId)
     {
+        $product = Product::findOrFail($productId);
         return view('product', ['product' => $product]);
     }
 }

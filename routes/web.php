@@ -19,4 +19,9 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/products', 'App\Http\Controllers\ProductController@index');
+//Route::controller(ProductController::class)->group(function () {
+//    Route::get('/products/{page?}', 'paginate');
+//})->name('products');
+
+Route::get('products', [ProductController::class, 'paginate'])->name('products');
+Route::get('product/{productId}', [ProductController::class, 'show'])->name('product');
