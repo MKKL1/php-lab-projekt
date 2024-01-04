@@ -2,20 +2,21 @@
 
 
 @section('content')
-
 <section class="h-100 gradient-custom">
     <div class="container py-5">
         <div class="row d-flex justify-content-center my-4">
             <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h5 class="mb-0">Cart - 2 items</h5>
+                        <h5 class="mb-0">Cart - {{count($cart)}} items</h5>
                     </div>
                     <div class="card-body">
 
 
-                        @foreach($cart->products()->get() as $product)
-
+                        @foreach($cart as $productId => $value)
+                            @php
+                                $product = App\Models\Product::find($productId);
+                            @endphp
                             <div class="row mb-4 d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
                                     <img
@@ -32,7 +33,7 @@
                                         <i class="bi bi-dash-circle"></i>
                                     </button>
 
-                                    <input id="form1" min="1" name="quantity" value="1" type="number"
+                                    <input id="form1" min="1" name="quantity" value="{{$value['quantity']}}" type="number"
                                            class="form-control form-control-sm" />
 
                                     <button class="btn btn-link px-2"

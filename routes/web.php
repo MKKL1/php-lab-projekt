@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,12 @@ Route::get('/', function () {
 
 Route::get('products', [ProductController::class, 'paginate'])->name('products');
 Route::get('product/{productId}', [ProductController::class, 'show'])->name('product');
-Route::get('cart/{cartId}', 'App\Http\Controllers\CartController@show');
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/add/{productId}', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update/{productId}', [CartController::class, 'update'])->name('cart.update');
+Route::get('/session', function() {
+    dd(session()->all());
+})->name('session');
+Route::get('/debug', function() {
+    dd(app()->getLoadedProviders());
+})->name('debug');
