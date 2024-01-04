@@ -1,10 +1,9 @@
 <?php
 
-namespace App\src\Cart;
+namespace App\Core\Cart;
 
 use Illuminate\Support\Collection;
 
 class CartCollection extends Collection
 {
-
 }

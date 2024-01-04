@@ -13,9 +13,9 @@
                     <div class="card-body">
 
 
-                        @foreach($cart as $productId => $value)
+                        @foreach($cart as $id => $value)
                             @php
-                                $product = App\Models\Product::find($productId);
+                                $product = App\Models\Product::find($value['productId']);
                             @endphp
                             <div class="row mb-4 d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
