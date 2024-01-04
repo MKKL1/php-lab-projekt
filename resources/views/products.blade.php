@@ -2,6 +2,7 @@
 
 @push('header')
     <link href="{{asset('css/products.css')}}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endpush
 
 @section('content')
@@ -44,7 +45,7 @@
                                         @endif
                                     </div>
                                     <h6 class="text-success">Darmowa dostawa od 30zł</h6>
-                                    <div class="d-flex flex-column mt-4"><a class="btn btn-primary btn-sm" href="{{route('cart.add', ['productId' => $product])}}" type="button">Dodaj do koszyka</a></div>
+                                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" onclick="add_to_cart({{$product->id}});">Dodaj do koszyka</button></div>
                                 </div>
                             </div>
                         </div>
@@ -53,9 +54,30 @@
 
                 {{ $paginator->links('pagination.default') }}
 
+
+
             </div>
 
         </div>
     </div>
 
 @endsection
+
+@push('scripts')
+    <script>
+        function add_to_cart(id) {
+            $.ajax({
+                url: "{{route('cart.add')}}",
+                method: "POST",
+                data: {
+                    productId: id,
+                    quantity: 1,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        }
+    </script>
+@endpush

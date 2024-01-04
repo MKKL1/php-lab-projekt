@@ -2,16 +2,32 @@
 
 namespace App\Core\Cart;
 
+use Exception;
+
 class ShoppingCart
 {
 
     private string $sessionKeyCartItems = 'cart';
+    private mixed $sessionKey = 'default_key';
 
     public function __construct()
     {
     }
 
-    public function add($id, $productId, $quantity): void
+    /**
+     * @throws Exception
+     */
+    public function session($sessionKey): static
+    {
+        if (!$sessionKey) throw new Exception("Session key is required.");
+
+        $this->sessionKey = $sessionKey;
+        $this->sessionKeyCartItems = $this->sessionKey . '_cart_items';
+
+        return $this;
+    }
+
+    public function add($id, $productId, $quantity): static
     {
         $cart = $this->getContent();
         $data = [
@@ -21,14 +37,16 @@ class ShoppingCart
         if($cart->has($id))
             $this->update($id, $data);
         else $this->addRow($id, $data);
-
+        return $this;
     }
 
-    public function remove($id): void
+    public function remove($id)
     {
         $cart = $this->getContent();
         $cart->forget($id);
         $this->save($cart);
+
+        return $this;
     }
 
     //TODO private
@@ -70,8 +88,9 @@ class ShoppingCart
         return $this->getContent();
     }
 
-    public function clear(): void
+    public function clear()
     {
         session()->forget($this->sessionKeyCartItems);
+        return $this;
     }
 }

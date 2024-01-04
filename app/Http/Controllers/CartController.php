@@ -9,7 +9,7 @@ class CartController extends Controller
 {
     public function index()
     {
-        ShoppingCart::add(uuid_create(), 3, 1);
+        //ShoppingCart::add(uuid_create(), 3, 1);
         return view('cart' , ['cart' => ShoppingCart::all()]);
     }
 
@@ -18,18 +18,18 @@ class CartController extends Controller
      */
     public function add(Request $request)
     {
-        ShoppingCart::add($request->input('id'), $request->input('productId'), $request->input('quantity'));
-        return redirect()->route('cart.index');
+        ShoppingCart::add(uuid_create(), $request->input('productId'), $request->input('quantity'));
+        return response()->json(['success' => true]);
     }
 
     public function remove(Request $request)
     {
         ShoppingCart::remove($request->input('id'));
-        return redirect()->route('cart.index');
+        return response()->json(['success' => true]);
     }
     public function update(Request $request)
     {
         ShoppingCart::add($request->input('id'), $request->input('productId'), $request->input('quantity'));
-        return redirect()->route('cart.index');
+        return response()->json(['success' => true]);
     }
 }
