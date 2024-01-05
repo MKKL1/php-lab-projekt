@@ -37,6 +37,9 @@ Route::post('/cart/update', [CartController::class, 'update'])->name('cart.updat
 Route::get('/session', function() {
     dd(session()->all());
 })->name('session');
+Route::get('/cartdata', function() {
+    dd(\App\Facades\ShoppingCart::getCart());
+})->name('cartdata');
 Route::get('/debug', function() {
     dd(app()->getLoadedProviders());
 })->name('debug');

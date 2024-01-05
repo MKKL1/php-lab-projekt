@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ShoppingCart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -10,7 +11,13 @@ class CartController extends Controller
     public function index()
     {
         //ShoppingCart::add(uuid_create(), 3, 1);
-        return view('cart' , ['cart' => ShoppingCart::all()]);
+        $cart = ShoppingCart::getCart();
+        $price = $cart->price();
+        $data = [];
+        foreach ($cart as $key => $value) {
+            $data[$key] = ['product' => Product::find($value['productId']), 'quantity' => $value['quantity']];
+        }
+        return view('cart' , ['cartData' => $data, 'price' => $price]);
     }
 
     /**

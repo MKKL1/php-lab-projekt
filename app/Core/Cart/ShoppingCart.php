@@ -29,7 +29,7 @@ class ShoppingCart
 
     public function add($id, $productId, $quantity): static
     {
-        $cart = $this->getContent();
+        $cart = $this->getCart();
         $data = [
             'productId' => $productId,
             'quantity' => $quantity
@@ -42,7 +42,7 @@ class ShoppingCart
 
     public function remove($id)
     {
-        $cart = $this->getContent();
+        $cart = $this->getCart();
         $cart->forget($id);
         $this->save($cart);
 
@@ -52,7 +52,7 @@ class ShoppingCart
     //TODO private
     public function update($id, $data): void
     {
-        $cart = $this->getContent();
+        $cart = $this->getCart();
         $cart->put($id, $data); //TODO should update invidual data
         $this->save($cart);
     }
@@ -60,7 +60,7 @@ class ShoppingCart
     //private
     public function addRow($id, $data): void
     {
-        $cart = $this->getContent();
+        $cart = $this->getCart();
         $cart->put($id, new CartItemCollection($data));
         $this->save($cart);
     }
@@ -76,16 +76,16 @@ class ShoppingCart
 
     }
 
-    public function getContent(): CartCollection
+    public function getCart(): CartCollection
     {
         return (new CartCollection(session()->get($this->sessionKeyCartItems)))->reject(function($item) {
             return ! ($item instanceof CartItemCollection);
         });
     }
 
-    public function all(): CartCollection
+    public function count(): int
     {
-        return $this->getContent();
+        return count($this->getCart());
     }
 
     public function clear()

@@ -2,6 +2,7 @@
 
 namespace App\Facades;
 
+use App\Core\Cart\CartCollection;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -9,7 +10,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static add(string $id, mixed $productId, int $quantity)
  * @method static remove(string $id)
  * @method static update(string $id, mixed $productId, int $quantity)
- * @method static all()
+ * @method CartCollection getCart()
+ * @method int count()
  */
 class ShoppingCart extends Facade
 {

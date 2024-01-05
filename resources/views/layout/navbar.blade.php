@@ -8,13 +8,11 @@
                 <li class="nav-item"><a class="nav-link" href="{{route('products')}}" data-link>Sklep</a></li>
                 <li class="nav-item"><a class="nav-link" href="/edit" data-link>Edycja</a></li>
             </ul>
-            <form class="d-flex">
-                <button class="btn btn-outline-dark" type="submit">
-                    <i class="bi-cart-fill me-1"></i>
-                    Koszyk
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </button>
-            </form>
+            <a href="{{route('cart.index')}}" class="btn btn-outline-dark">
+                <i class="bi-cart-fill me-1"></i>
+                Koszyk
+                <span class="badge bg-dark text-white ms-1 rounded-pill">{{$shopping_cart_count}}</span>
+            </a>
         </div>
     </div>
 </nav>

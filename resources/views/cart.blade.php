@@ -1,5 +1,7 @@
 @extends('layout.app')
-
+@push('header')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+@endpush
 
 @section('content')
 <section class="h-100 gradient-custom">
@@ -8,14 +10,14 @@
             <div class="col-md-8">
                 <div class="card mb-4">
                     <div class="card-header py-3">
-                        <h5 class="mb-0">Cart - {{count($cart)}} items</h5>
+                        <h5 class="mb-0">Cart -  items</h5>
                     </div>
                     <div class="card-body">
 
 
-                        @foreach($cart as $id => $value)
+                        @foreach($cartData as $id => $value)
                             @php
-                                $product = App\Models\Product::find($value['productId']);
+                                $product = $value['product'];
                             @endphp
                             <div class="row mb-4 d-flex justify-content-between align-items-center">
                                 <div class="col-md-2 col-lg-2 col-xl-2">
@@ -29,15 +31,15 @@
                                 </div>
                                 <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                     <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); update_price()">
                                         <i class="bi bi-dash-circle"></i>
                                     </button>
 
-                                    <input id="form1" min="1" name="quantity" value="{{$value['quantity']}}" type="number"
-                                           class="form-control form-control-sm" />
+                                    <input id="{{$id}}" min="1" name="quantity" value="{{$value['quantity']}}" type="number"
+                                           class="form-control form-control-sm"/>
 
                                     <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); update_price()">
                                         <i class="bi bi-plus-circle"></i>
                                     </button>
                                 </div>
@@ -87,7 +89,8 @@
                             <li
                                 class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                 Products
-                                <span>$53.98</span>
+                                NEEDS TO BE UPDATED
+                                <span><div id="productPrice">{{$price}} zł</div></span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                 Shipping
@@ -101,7 +104,7 @@
                                         <p class="mb-0">(including VAT)</p>
                                     </strong>
                                 </div>
-                                <span><strong>$53.98</strong></span>
+                                <span><strong><div id="totalPrice">{{$price}} zł</div></strong></span>
                             </li>
                         </ul>
 
@@ -119,6 +122,21 @@
 
 @push('scripts')
     <script>
-
+        //Or save in cookies
+        //Also too complicated
+        data = {!! json_encode($cartData, JSON_HEX_TAG) !!};
+        function update_price(cartData = data) {
+            console.log('update');
+            let sum = 0;
+            for (const key in cartData) {
+                const obj = cartData[key];
+                const product = obj['product'];
+                const quantity = $('#' + key).filter('input[name="quantity"]').val();
+                const isSale = !jQuery.isEmptyObject(product['saleCost']);
+                const cost = isSale ? product['saleCost'] : product['cost'];
+                sum += cost * quantity;
+            }
+            $('#totalPrice,#productPrice').text(sum.toFixed(2) + " zł");
+        }
     </script>
 @endpush
