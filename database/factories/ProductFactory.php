@@ -15,7 +15,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->name(),
             'cost' => fake()->randomFloat(2, 50, 100),
-            'saleCost' => fake()->randomFloat(2, 0, 50),
+            'saleCost' => rand(0,99) < 20 ? fake()->randomFloat(2, 0, 50) : null,
             'quantity' => fake()->randomNumber(2),
             'description' => fake()->text(),
             'image' => fake()->imageUrl(),

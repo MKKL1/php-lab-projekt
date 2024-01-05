@@ -15,7 +15,7 @@ class ProductController extends Controller
 
     public function paginate(Request $request) {
         $page = $request->input('page', 1);
-        return view('products', ['paginator' => Product::paginate(3, ['*'], 'page', $page)]);
+        return view('products', ['paginator' => Product::paginate(10, ['*'], 'page', $page)]);
     }
 
 //    public function store(Request $request)

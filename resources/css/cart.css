@@ -1,0 +1,19 @@
+.cart-products:empty {
+    padding-top: 0;
+}
+
+.productBase {
+    height: 40px;
+    background: lightblue;
+    margin: 2px;
+
+}
+.animate
+{
+    height: 0;
+    transition: height 1s;
+}
+.productBase:first-child {
+    margin-top: -38px;
+}
+

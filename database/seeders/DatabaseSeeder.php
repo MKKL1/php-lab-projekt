@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
              ->has(Cart::factory()->count(1))
              ->create();
 
-         Product::factory(10)->create();
+         Product::factory(100)->create();
 
          $products = Product::all();
 

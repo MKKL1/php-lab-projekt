@@ -12,7 +12,7 @@
                     <div class="card-header py-3">
                         <h5 class="mb-0">Cart -  items</h5>
                     </div>
-                    <div class="card-body">
+                    <div class="cart-products card-body">
 
 
                         @foreach($cartData as $id => $value)
@@ -47,9 +47,13 @@
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h6 class="mb-0">{{$product->realPrice()}} zł</h6>
                                     </div>
-                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                        <a href="#!" class="text-muted"><i class="bi bi-x"></i></a>
-                                    </div>
+{{--                                    <button class="col-md-1 col-lg-1 col-xl-1 text-end">--}}
+{{--                                        <a href="#!" class="text-muted"><i class="bi bi-x"></i></a>--}}
+{{--                                    </button>--}}
+
+                                    <button onclick="remove(this)" class="btn px-2 col-md-1 col-lg-1 col-xl-1">
+                                        <i class="bi bi-x"></i>
+                                    </button>
                                 </div>
                                 <hr class="my-4"/>
                             </div>
@@ -125,7 +129,7 @@
 @push('scripts')
     <script>
         var timerId;
-        var  throttleFunction  =  function (func, delay) {
+        var throttleFunction = function (func, delay) {
             if (timerId) {
                 return
             }
@@ -137,6 +141,23 @@
 
         function selectProductBase(element) {
             return $(element).closest('.productBase');
+        }
+
+        function remove(element) {
+            const base = selectProductBase(element);
+            const id = base.attr('id');
+            $.ajax({
+                url: "{{route('cart.remove')}}",
+                method: "POST",
+                data: {
+                    id: id,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log(response);
+                    base.remove();
+                }
+            })
         }
 
         //TODO Limit server-side as well
