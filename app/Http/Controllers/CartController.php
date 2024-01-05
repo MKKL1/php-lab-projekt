@@ -3,36 +3,49 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ShoppingCart;
+use App\Http\Requests\CartAddRequest;
+use App\Http\Requests\CartRemoveRequest;
+use App\Http\Requests\CartUpdateRequest;
 use App\Models\Product;
+use App\Providers\ShoppingCartServiceProvider;
+use DateTime;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+
+
     public function index()
     {
-        //ShoppingCart::add(uuid_create(), 3, 1);
         $cart = ShoppingCart::getCart();
         $price = $cart->price();
         $data = [];
         foreach ($cart as $key => $value) {
             $data[$key] = ['product' => Product::find($value['productId']), 'quantity' => $value['quantity']];
         }
-        return view('cart' , ['cartData' => $data, 'price' => $price]);
+        $expectedDeliveryStart = new DateTime();
+        $expectedDeliveryStart->modify('+1 day');
+        $expectedDeliveryEnd = new DateTime();
+        $expectedDeliveryEnd->modify('+3 day');
+        return view('cart' , ['cartData' => $data, 'price' => $price,'expectedDeliveryStart' => $expectedDeliveryStart,'expectedDeliveryEnd' => $expectedDeliveryEnd]);
     }
 
     /**
-     * Used for adding one product to the cart.
+     * Add one product to the cart.
      */
-    public function add(Request $request)
+    public function add(CartAddRequest $request)
     {
-        ShoppingCart::add(uuid_create(), $request->input('productId'), $request->input('quantity'));
-        return response()->json(['success' => true]);
+        $validated = $request->validated();
+        $id = uuid_create();
+        ShoppingCart::add($id, $validated['productId'], $validated['quantity']);
+        return response()->json(['success' => true, 'id' => $id]);
     }
 
-    public function remove(Request $request)
+    public function remove(CartRemoveRequest $request)
     {
-        ShoppingCart::remove($request->input('id'));
-        return response()->json(['success' => true]);
+        $validated = $request->validated();
+        $removed = ShoppingCart::remove($validated['id']);
+        return response()->json(['success' => true, 'removed' => $removed]);
     }
 
     public function clear()
@@ -41,9 +54,16 @@ class CartController extends Controller
         return response()->json(['success' => true]);
     }
 
-    public function update(Request $request)
+    public function update(CartUpdateRequest $request)
     {
-        ShoppingCart::update($request->input('id'), $request->input('data'));
+        $validated = $request->validated();
+        $data = [];
+        if(array_key_exists('productId', $validated))
+            $data['productId'] = $validated['productId'];
+        if(array_key_exists('quantity', $validated))
+            $data['quantity'] = $validated['quantity'];
+
+        ShoppingCart::update($validated['id'], $data);
         return response()->json(['success' => true]);
     }
 }

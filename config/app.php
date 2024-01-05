@@ -168,7 +168,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\ShoppingCartServiceProvider::class
+        App\Providers\ShoppingCartServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class
     ])->toArray(),
 
     /*

@@ -44,10 +44,11 @@ class ShoppingCart
     public function remove($id)
     {
         $cart = $this->getCart();
+        $has = $cart->has($id);
         $cart->forget($id);
         $this->save($cart);
 
-        return $this;
+        return $has;
     }
 
     public function update($id, $data): void

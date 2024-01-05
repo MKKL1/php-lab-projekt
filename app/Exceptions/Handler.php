@@ -25,6 +25,7 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             error_log($e->getMessage());
+            error_log($e->getTraceAsString());
         });
     }
 }

@@ -60,7 +60,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <p><strong>Expected shipping delivery</strong></p>
-                        <p class="mb-0">12.10.2020 - 14.10.2020</p>
+                        <p class="mb-0">{{ $expectedDeliveryStart->format('d.m.Y') }} - {{ $expectedDeliveryEnd->format('d.m.Y') }}</p>
                     </div>
                 </div>
                 <div class="card mb-4 mb-lg-0">
@@ -151,9 +151,7 @@
                     method: "POST",
                     data: {
                         id: id,
-                        data: {
-                            'quantity': quantity
-                        },
+                        quantity: quantity,
                         _token: '{{csrf_token()}}'
                     },
                     success: function (response) {
