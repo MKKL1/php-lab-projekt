@@ -30,6 +30,7 @@ class ShoppingCart
     public function add($id, $productId, $quantity): static
     {
         $cart = $this->getCart();
+        //TODO validate
         $data = [
             'productId' => $productId,
             'quantity' => $quantity
@@ -49,11 +50,15 @@ class ShoppingCart
         return $this;
     }
 
-    //TODO private
     public function update($id, $data): void
     {
         $cart = $this->getCart();
-        $cart->put($id, $data); //TODO should update invidual data
+        $changedData = $cart->get($id);
+        //TODO validate
+        foreach($data as $key => $value) {
+            $changedData[$key] = $value;
+        }
+        $cart->put($id, $changedData);
         $this->save($cart);
     }
 

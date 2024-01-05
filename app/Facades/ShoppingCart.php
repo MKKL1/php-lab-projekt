@@ -9,7 +9,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static session(string $id)
  * @method static add(string $id, mixed $productId, int $quantity)
  * @method static remove(string $id)
- * @method static update(string $id, mixed $productId, int $quantity)
+ * @method static update(string $id, mixed $data)
+ * @method static clear()
  * @method CartCollection getCart()
  * @method int count()
  */

@@ -34,9 +34,16 @@ class CartController extends Controller
         ShoppingCart::remove($request->input('id'));
         return response()->json(['success' => true]);
     }
+
+    public function clear()
+    {
+        ShoppingCart::clear();
+        return response()->json(['success' => true]);
+    }
+
     public function update(Request $request)
     {
-        ShoppingCart::add($request->input('id'), $request->input('productId'), $request->input('quantity'));
+        ShoppingCart::update($request->input('id'), $request->input('data'));
         return response()->json(['success' => true]);
     }
 }

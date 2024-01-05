@@ -14,7 +14,7 @@ class CartCollection extends Collection
     {
         $sum = 0;
         foreach ($this as $value) {
-            $sum += Product::find($value['productId'])->realPrice() * $value['quantity'];
+            $sum += Product::findOrFail($value['productId'])->realPrice() * $value['quantity'];
         }
         return $sum;
     }

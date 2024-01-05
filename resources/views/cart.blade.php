@@ -19,38 +19,40 @@
                             @php
                                 $product = $value['product'];
                             @endphp
-                            <div class="row mb-4 d-flex justify-content-between align-items-center">
-                                <div class="col-md-2 col-lg-2 col-xl-2">
-                                    <img
-                                        src="{{$product->image}}"
-                                        class="img-fluid rounded-3" alt="Cotton T-shirt">
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-3">
-{{--                                    <h6 class="text-muted">Shirt</h6> KATEGORIA--}}
-                                    <h6 class="text-black mb-0">{{$product->name}}</h6>
-                                </div>
-                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepDown(); update_price()">
-                                        <i class="bi bi-dash-circle"></i>
-                                    </button>
+                            <div id="{{$id}}" class="productBase">
+                                <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <img
+                                            src="{{$product->image}}"
+                                            class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+    {{--                                    <h6 class="text-muted">Shirt</h6> KATEGORIA--}}
+                                        <h6 class="text-black mb-0">{{$product->name}}</h6>
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                        <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepDown(); update_quantity(this)">
+                                            <i class="bi bi-dash-circle"></i>
+                                        </button>
 
-                                    <input id="{{$id}}" min="1" name="quantity" value="{{$value['quantity']}}" type="number"
-                                           class="form-control form-control-sm"/>
+                                        <input min="1" name="quantity" value="{{$value['quantity']}}" type="number"
+                                               class="form-control form-control-sm"/>
 
-                                    <button class="btn btn-link px-2"
-                                            onclick="this.parentNode.querySelector('input[type=number]').stepUp(); update_price()">
-                                        <i class="bi bi-plus-circle"></i>
-                                    </button>
+                                        <button class="btn btn-link px-2"
+                                                onclick="this.parentNode.querySelector('input[type=number]').stepUp(); update_quantity(this)">
+                                            <i class="bi bi-plus-circle"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <h6 class="mb-0">{{$product->realPrice()}} zł</h6>
+                                    </div>
+                                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                        <a href="#!" class="text-muted"><i class="bi bi-x"></i></a>
+                                    </div>
                                 </div>
-                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                                    <h6 class="mb-0">{{$product->realPrice()}} zł</h6>
-                                </div>
-                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                    <a href="#!" class="text-muted"><i class="bi bi-x"></i></a>
-                                </div>
+                                <hr class="my-4"/>
                             </div>
-                            <hr class="my-4"/>
                         @endforeach
 
                     </div>
@@ -122,21 +124,44 @@
 
 @push('scripts')
     <script>
-        //Or save in cookies
-        //Also too complicated
-        data = {!! json_encode($cartData, JSON_HEX_TAG) !!};
-        function update_price(cartData = data) {
-            console.log('update');
-            let sum = 0;
-            for (const key in cartData) {
-                const obj = cartData[key];
-                const product = obj['product'];
-                const quantity = $('#' + key).filter('input[name="quantity"]').val();
-                const isSale = !jQuery.isEmptyObject(product['saleCost']);
-                const cost = isSale ? product['saleCost'] : product['cost'];
-                sum += cost * quantity;
+        var timerId;
+        var  throttleFunction  =  function (func, delay) {
+            if (timerId) {
+                return
             }
-            $('#totalPrice,#productPrice').text(sum.toFixed(2) + " zł");
+            timerId  =  setTimeout(function () {
+                func()
+                timerId  =  undefined;
+            }, delay)
         }
+
+        function selectProductBase(element) {
+            return $(element).closest('.productBase');
+        }
+
+        //TODO Limit server-side as well
+        function update_quantity(element) {
+            throttleFunction(function () {
+                const base = selectProductBase(element);
+                const id = base.attr('id');
+                const quantity = base.find('input[name=quantity]').val();
+                console.log(quantity);
+                $.ajax({
+                    url: "{{route('cart.update')}}",
+                    method: "POST",
+                    data: {
+                        id: id,
+                        data: {
+                            'quantity': quantity
+                        },
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            }, 500);
+        }
+
     </script>
 @endpush
