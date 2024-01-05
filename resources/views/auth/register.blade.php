@@ -1,48 +1,77 @@
-@extends('auth.layout.base')
+@extends('layout.app')
 
 @section('content')
-    <h3 class="mb-5">Register</h3>
-    <form action="{{route('auth.register-user')}}" method="post">
-        @if(Session::has('success'))
-            <div class="alert alert-success">
-                {{Session::get('success')}}
-            </div>
-        @else
-            @if(Session::has('fail'))
-                <div class="alert alert-danger">
-                    {{Session::get('fail')}}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
+
+                <div class="card-body">
+                    <form method="POST" action="{{ route('register') }}">
+                        @csrf
+
+                        <div class="row mb-3">
+                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+
+                                @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+
+                                @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+
+                                @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+
+                        <div class="row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Register') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            @endif
-        @endif
-        @csrf
-        <div class="form-outline mb-4">
-            <input type="text" id="loginInput" name="login" value="{{old('name')}}" class="form-control form-control-lg"/>
-            <label class="form-label" for="loginInput">Login</label>
-            <span class="text-danger">@error('login'){{$message}}@enderror</span>
+            </div>
         </div>
-
-        <div class="form-outline mb-4">
-            <input type="email" id="emailInput" name="email" value="{{old('email')}}" class="form-control form-control-lg"/>
-            <label class="form-label" for="emailInput">Email</label>
-            <span class="text-danger">@error('email'){{$message}}@enderror</span>
-        </div>
-
-        <div class="form-outline mb-4">
-            <input type="password" id="passwordInput" name="password" value="{{old('password')}}" class="form-control form-control-lg"/>
-            <label class="form-label" for="passwordInput">Password</label>
-            <span class="text-danger">@error('password'){{$message}}@enderror</span>
-        </div>
-
-        <button class="btn btn-primary btn-lg btn-block" type="submit">Register</button>
-
-    </form>
-
-    <hr class="my-4">
-
-    <button class="btn btn-lg btn-block btn-primary" style="background-color: #dd4b39;"
-            type="submit"><i class="fab fa-google me-2"></i> Sign in with google
-    </button>
-    <button class="btn btn-lg btn-block btn-primary mb-2" style="background-color: #3b5998;"
-            type="submit"><i class="fab fa-facebook-f me-2"></i>Sign in with facebook
-    </button>
+    </div>
+</div>
 @endsection

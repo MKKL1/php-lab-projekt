@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "053fc30805db866509b35617f0862650",
+    "content-hash": "cb2f8e2db143f0a9dd68e234b16583fd",
     "packages": [
         {
             "name": "brick/math",
@@ -1895,75 +1895,6 @@
                 }
             ],
             "time": "2023-10-17T14:13:20+00:00"
-        },
-        {
-            "name": "mindscms/laravelshoppingcart",
-            "version": "v2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mindscms/laravelshoppingcart.git",
-                "reference": "0ef2daf867c1699f23966f282db342630c3f9d00"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mindscms/laravelshoppingcart/zipball/0ef2daf867c1699f23966f282db342630c3f9d00",
-                "reference": "0ef2daf867c1699f23966f282db342630c3f9d00",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/events": "^7|^8|^9|^10",
-                "illuminate/session": "^7|^8|^9|^10",
-                "illuminate/support": "^7|^8|^9|^10"
-            },
-            "require-dev": {
-                "mockery/mockery": "^1",
-                "orchestra/testbench": "^7",
-                "phpunit/phpunit": "^10"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider"
-                    ],
-                    "aliases": {
-                        "Cart": "Gloudemans\\Shoppingcart\\Facades\\Cart"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Gloudemans\\Shoppingcart\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rob Gloudemans",
-                    "email": "info@robgloudemans.nl"
-                },
-                {
-                    "name": "Michael V.",
-                    "email": "michael@michaelbelgium.me"
-                },
-                {
-                    "name": "Sami Mansour",
-                    "email": "mindscms@gmail.com"
-                }
-            ],
-            "description": "Laravel Shopping cart",
-            "keywords": [
-                "laravel",
-                "shoppingcart"
-            ],
-            "support": {
-                "issues": "https://github.com/mindscms/laravelshoppingcart/issues",
-                "source": "https://github.com/mindscms/laravelshoppingcart/tree/v2.1.0"
-            },
-            "time": "2023-03-07T08:56:27+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -6103,6 +6034,68 @@
                 "source": "https://github.com/laravel/sail"
             },
             "time": "2023-12-02T18:26:39+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v4.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "d166e09cdcb2e23836f694774cba77a32edb6007"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/d166e09cdcb2e23836f694774cba77a32edb6007",
+                "reference": "d166e09cdcb2e23836f694774cba77a32edb6007",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^9.21|^10.0",
+                "illuminate/filesystem": "^9.21|^10.0",
+                "illuminate/support": "^9.21|^10.0",
+                "illuminate/validation": "^9.21|^10.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^7.0|^8.0",
+                "phpunit/phpunit": "^9.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.x-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "support": {
+                "source": "https://github.com/laravel/ui/tree/v4.3.0"
+            },
+            "time": "2023-12-19T14:46:09+00:00"
         },
         {
             "name": "mockery/mockery",

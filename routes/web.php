@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
@@ -19,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home');
 
 //Route::controller(ProductController::class)->group(function () {
 //    Route::get('/products/{page?}', 'paginate');
@@ -34,9 +37,9 @@ Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remov
 Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
 
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-Route::get('/register', [AuthController::class, 'register'])->name('auth.register');
-Route::post('/register-user', [AuthController::class, 'registerUser'])->name('auth.register-user');
+Route::get('/login', [LoginController::class, 'login'])->name('auth.login');
+Route::get('/register', [RegisterController::class, 'register'])->name('auth.register');
+Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout');
 
 Route::get('/session', function() {
     dd(session()->all());
@@ -47,3 +50,7 @@ Route::get('/cartdata', function() {
 Route::get('/debug', function() {
     dd(app()->getLoadedProviders());
 })->name('debug');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
