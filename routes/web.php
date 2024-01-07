@@ -5,7 +5,6 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
@@ -28,18 +27,30 @@ Route::get('/', function () {
 //    Route::get('/products/{page?}', 'paginate');
 //})->name('products');
 
-Route::get('products', [ProductController::class, 'paginate'])->name('products');
-Route::get('product/{productId}', [ProductController::class, 'show'])->name('product');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
-Route::get('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::group(['namespace' => 'App\Http\Controllers'], function() {
 
-Route::get('/login', [LoginController::class, 'login'])->name('auth.login');
-Route::get('/register', [RegisterController::class, 'register'])->name('auth.register');
-Route::post('/logout', [LogoutController::class, 'logout'])->name('auth.logout');
+    Route::get('products', 'ProductController@paginate')->name('products');
+    Route::get('product/{productId}', 'ProductController@show')->name('product');
+
+    Route::get('/cart', 'CartController@index')->name('cart.index');
+    Route::post('/cart/add', 'CartController@add')->name('cart.add');
+    Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
+    Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+    Route::post('/cart/update', 'CartController@update')->name('cart.update');
+
+
+    Route::group(['middleware' => ['guest']], function() {
+        Route::get('/login', 'LoginController@showLoginForm')->name('auth.login.show');
+        Route::post('/login', 'LoginController@login')->name('auth.login');
+        Route::get('/register', 'RegisterController@register')->name('auth.register');
+    });
+
+    Route::group(['middleware' => ['auth']], function () {
+        Route::post('/logout', 'LogoutController@logout')->name('auth.logout');
+    });
+});
+
 
 Route::get('/session', function() {
     dd(session()->all());
