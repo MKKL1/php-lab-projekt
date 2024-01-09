@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @section('content')
     <section class="vh-100" style=" background: rgb(20,54,110); background: linear-gradient(120deg, rgb(58,12,225) 0%, rgb(8,139,232) 80%); ">
@@ -12,7 +12,7 @@
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="emailInput" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus/>
+                                    <input type="email" id="emailInput" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"/>
                                     <label class="form-label" for="emailInput">Email</label>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">

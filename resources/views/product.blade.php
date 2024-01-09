@@ -1,7 +1,25 @@
-@extends('layout.app')
+@extends('layouts.app')
+
+@vite('resources/css/products.css')
 
 @push('header')
-    <link href="{{asset('css/products.css')}}" rel="stylesheet">
+    <script>
+        function add_to_cart(id) {
+            $.ajax({
+                url: "{{route('cart.add')}}",
+                method: "POST",
+                data: {
+                    productId: id,
+                    quantity: 1,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log(response);
+                }
+            })
+        }
+
+    </script>
 @endpush
 
 @section('content')

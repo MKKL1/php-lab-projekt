@@ -42,13 +42,17 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
 
     Route::group(['middleware' => ['guest']], function() {
         Route::get('/login', 'LoginController@showLoginForm')->name('auth.login.show');
-        Route::post('/login', 'LoginController@login')->name('auth.login');
         Route::get('/register', 'RegisterController@register')->name('auth.register');
     });
 
     Route::group(['middleware' => ['auth']], function () {
         Route::post('/logout', 'LogoutController@logout')->name('auth.logout');
+        Route::group(['middleware' => ['admin']], function () {
+            Route::get('/edit', 'EditController@index')->name('edit.index');
+        });
     });
+
+
 });
 
 
@@ -63,5 +67,3 @@ Route::get('/debug', function() {
 })->name('debug');
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

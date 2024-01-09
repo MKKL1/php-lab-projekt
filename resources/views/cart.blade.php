@@ -1,8 +1,62 @@
-@extends('layout.app')
+@extends('layouts.app')
 @push('header')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-@endpush
+    <script>
+        var timerId;
+        var throttleFunction = function (func, delay) {
+            if (timerId) {
+                return
+            }
+            timerId  =  setTimeout(function () {
+                func()
+                timerId  =  undefined;
+            }, delay)
+        }
 
+        function selectProductBase(element) {
+            return $(element).closest('.productBase');
+        }
+
+        function remove(element) {
+            const base = selectProductBase(element);
+            const id = base.attr('id');
+            $.ajax({
+                url: "{{route('cart.remove')}}",
+                method: "POST",
+                data: {
+                    id: id,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log(response);
+                    base.remove();
+                }
+            })
+        }
+
+        //TODO Limit server-side as well
+        function update_quantity(element) {
+            throttleFunction(function () {
+                const base = selectProductBase(element);
+                const id = base.attr('id');
+                const quantity = base.find('input[name=quantity]').val();
+                console.log(quantity);
+                $.ajax({
+                    url: "{{route('cart.update')}}",
+                    method: "POST",
+                    data: {
+                        id: id,
+                        quantity: quantity,
+                        _token: '{{csrf_token()}}'
+                    },
+                    success: function (response) {
+                        console.log(response);
+                    }
+                })
+            }, 500);
+        }
+
+    </script>
+@endpush
 @section('content')
 <section class="h-100 gradient-custom">
     <div class="container py-5">
@@ -33,7 +87,7 @@
                                     <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                                         <button class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepDown(); update_quantity(this)">
-                                            <i class="bi bi-dash-circle"></i>
+                                            <i class="fas fa-minus-circle"></i>
                                         </button>
 
                                         <input min="1" name="quantity" value="{{$value['quantity']}}" type="number"
@@ -41,7 +95,7 @@
 
                                         <button class="btn btn-link px-2"
                                                 onclick="this.parentNode.querySelector('input[type=number]').stepUp(); update_quantity(this)">
-                                            <i class="bi bi-plus-circle"></i>
+                                            <i class="fas fa-plus-circle"></i>
                                         </button>
                                     </div>
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
@@ -52,7 +106,7 @@
 {{--                                    </button>--}}
 
                                     <button onclick="remove(this)" class="btn px-2 col-md-1 col-lg-1 col-xl-1">
-                                        <i class="bi bi-x"></i>
+                                        <i class="fas fa-x"></i>
                                     </button>
                                 </div>
                                 <hr class="my-4"/>
@@ -125,62 +179,3 @@
 </section>
 
 @endsection
-
-@push('scripts')
-    <script>
-        var timerId;
-        var throttleFunction = function (func, delay) {
-            if (timerId) {
-                return
-            }
-            timerId  =  setTimeout(function () {
-                func()
-                timerId  =  undefined;
-            }, delay)
-        }
-
-        function selectProductBase(element) {
-            return $(element).closest('.productBase');
-        }
-
-        function remove(element) {
-            const base = selectProductBase(element);
-            const id = base.attr('id');
-            $.ajax({
-                url: "{{route('cart.remove')}}",
-                method: "POST",
-                data: {
-                    id: id,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function (response) {
-                    console.log(response);
-                    base.remove();
-                }
-            })
-        }
-
-        //TODO Limit server-side as well
-        function update_quantity(element) {
-            throttleFunction(function () {
-                const base = selectProductBase(element);
-                const id = base.attr('id');
-                const quantity = base.find('input[name=quantity]').val();
-                console.log(quantity);
-                $.ajax({
-                    url: "{{route('cart.update')}}",
-                    method: "POST",
-                    data: {
-                        id: id,
-                        quantity: quantity,
-                        _token: '{{csrf_token()}}'
-                    },
-                    success: function (response) {
-                        console.log(response);
-                    }
-                })
-            }, 500);
-        }
-
-    </script>
-@endpush

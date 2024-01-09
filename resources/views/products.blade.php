@@ -1,8 +1,27 @@
-@extends('layout.app')
+@extends('layouts.app')
 
 @push('header')
-    <link href="{{asset('css/products.css')}}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @vite('resources/sass/products.scss')
+    <script type="module">
+        $(".cart-button").one("click", function() {
+            const button = $(this);
+            $.ajax({
+                url: "{{route('cart.add')}}",
+                method: "POST",
+                data: {
+                    productId: $(this).attr('productId'),
+                    quantity: 1,
+                    _token: '{{csrf_token()}}'
+                },
+                success: function (response) {
+                    console.log(response);
+                    button.addClass('bought').text('Dodano do koszyka').prop('disabled', true);
+                }
+            })
+        });
+
+
+    </script>
 @endpush
 
 @section('content')
@@ -45,7 +64,11 @@
                                         @endif
                                     </div>
                                     <h6 class="text-success">Darmowa dostawa od 30zł</h6>
-                                    <div class="d-flex flex-column mt-4"><button class="btn btn-primary btn-sm" onclick="add_to_cart({{$product->id}});">Dodaj do koszyka</button></div>
+                                    <div class="d-flex flex-column mt-4">
+                                        <button class="cart-button btn btn-outline-primary btn-sm" productId="{{$product->id}}">
+                                            Dodaj do koszyka
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -62,22 +85,3 @@
     </div>
 
 @endsection
-
-@push('scripts')
-    <script>
-        function add_to_cart(id) {
-            $.ajax({
-                url: "{{route('cart.add')}}",
-                method: "POST",
-                data: {
-                    productId: id,
-                    quantity: 1,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function (response) {
-                    console.log(response);
-                }
-            })
-        }
-    </script>
-@endpush

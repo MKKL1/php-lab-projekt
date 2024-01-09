@@ -9,6 +9,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Proengsoft\JsValidation\Remote\Validator;
 
 class LoginController extends Controller
 {
@@ -42,12 +43,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-//    protected function validateLogin(Request $request)
-//    {
-//        $request->validate([
-//
-//        ])
-//    }
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            $this->username() => 'required|string|email|max:255',
+            'password' => 'required|string'
+        ]);
+    }
 
 
 }
