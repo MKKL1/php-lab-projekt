@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ShoppingCart;
+use App\Http\Requests\ProductAddRequest;
+use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -18,19 +21,6 @@ class ProductController extends Controller
         return view('products', ['paginator' => Product::paginate(10, ['*'], 'page', $page)]);
     }
 
-//    public function store(Request $request)
-//    {
-//        $data = $request->validate([
-//            'name' => ['required'],
-//            'cost' => ['required', 'numeric'],
-//            'saleCost' => ['nullable', 'numeric'],
-//            'quantity' => ['required', 'integer'],
-//            'description' => ['nullable'],
-//            'image' => ['required'],
-//        ]);
-//
-//        return new ProductResource(Product::create($data));
-//    }
 
     public function show($productId)
     {

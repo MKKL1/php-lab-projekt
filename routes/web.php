@@ -49,7 +49,19 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
         Route::post('/logout', 'LogoutController@logout')->name('auth.logout');
         Route::group(['middleware' => ['admin']], function () {
             Route::get('/edit', 'EditController@index')->name('edit.index');
+            Route::get('/edit/add', 'EditController@addProductView')->name('edit.add.index');
+            Route::get('/edit/update/{productId}', 'EditController@updateView')->name('edit.update.index');
+
+            Route::post('/edit/update/{productId}', 'EditController@update')
+                ->can('update-products') //TODO not needed
+                ->name('edit.update');
+
+            Route::post('/edit/add', 'EditController@add')
+                ->can('add-products') //TODO not needed
+                ->name('edit.add');
         });
+
+
     });
 
 

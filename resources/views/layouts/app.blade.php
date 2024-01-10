@@ -71,7 +71,7 @@
                                     </form>
                                 </ul>
                             </li>
-                            @can('edit-products')
+                            @can('update-products')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::currentRouteNamed('edit.index') ? 'active' : '' }}" aria-current="page" href="{{route('edit.index')}}">Edit</a>
                                 </li>

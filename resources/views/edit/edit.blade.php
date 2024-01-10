@@ -3,6 +3,7 @@
     @vite('resources/sass/edit.scss')
 @endpush
 @section('content')
+
     <div class="container">
         <div class="row">
             <div class="col-12 mb-3 mb-lg-5">
@@ -63,7 +64,7 @@
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         {{ $paginator->links('pagination.default') }}
-                        <a class="btn btn-primary ">
+                        <a class="btn btn-primary" href="{{route('edit.add.index')}}">
                             Dodaj przedmiot
                         </a>
                     </div>

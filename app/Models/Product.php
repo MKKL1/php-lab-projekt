@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Product extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['name', 'cost', 'saleCost', 'quantity', 'description', 'image'];
     function isOnSale(): bool
     {
         return $this->saleCost != null;
