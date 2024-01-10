@@ -5,7 +5,9 @@ namespace Database\Seeders;
 use App\Models\Cart;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +20,24 @@ class DatabaseSeeder extends Seeder
              ->count(50)
              ->has(Cart::factory()->count(1))
              ->create();
+
+         User::create([
+             'name' => 'admin',
+             'email' => 'admin@example.pl',
+             'password' => Hash::make('12345678'),
+             'status' => 'admin',
+             'created_at' => Carbon::now(),
+             'updated_at' => Carbon::now()
+         ]);
+
+        User::create([
+            'name' => 'user',
+            'email' => 'user@example.pl',
+            'password' => Hash::make('12345678'),
+            'status' => 'user',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
 
          Product::factory(100)->create();
 

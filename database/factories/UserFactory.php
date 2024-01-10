@@ -30,8 +30,7 @@ class UserFactory extends Factory
             'name' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'status' => UserStatus::User->value,
-            'remember_token' => Str::random(10),
+            'status' => 'user',
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

@@ -63,7 +63,7 @@ Route::get('/cartdata', function() {
     dd(\App\Facades\ShoppingCart::getCart());
 })->name('cartdata');
 Route::get('/debug', function() {
-    dd(app()->getLoadedProviders());
+    dd(Auth::user()->isAdmin());
 })->name('debug');
 
 Auth::routes();

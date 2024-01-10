@@ -71,11 +71,11 @@
                                     </form>
                                 </ul>
                             </li>
-                            @guest('admin')
+                            @can('edit-products')
                                 <li class="nav-item">
                                     <a class="nav-link {{ Route::currentRouteNamed('edit.index') ? 'active' : '' }}" aria-current="page" href="{{route('edit.index')}}">Edit</a>
                                 </li>
-                            @endguest
+                            @endcan
                         @endguest
                     </ul>
                     <ul class="nav navbar-nav ml-auto w-100 justify-content-end">

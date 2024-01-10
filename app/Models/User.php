@@ -50,6 +50,6 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->status == UserStatus::Admin->value;
+        return $this->status == 'admin';
     }
 }
