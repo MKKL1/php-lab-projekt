@@ -9,16 +9,23 @@
         </div>
 
     @endif
+
+    @error('id')
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong>
+        {{$message}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @enderror
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-center row">
             <div class="col-md-10">
                 <form method="post" action="@yield('action')" class="form">
-                    {{$product->id}}
                     @csrf
                     @yield('input')
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductName">Nazwa</label>
-                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Nazwa przedmiotu" id="formProductName"/>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $product->name) }}" placeholder="Nazwa przedmiotu" id="formProductName"/>
                         @error('name')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -28,7 +35,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductPrice">Cena*</label>
-                        <input type="text" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost') }}" placeholder="19.99" id="formProductPrice" />
+                        <input type="text" class="form-control @error('cost') is-invalid @enderror" name="cost" value="{{ old('cost', $product->cost) }}" placeholder="19.99" id="formProductPrice" />
                         @error('cost')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -38,7 +45,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductSale">Przecena</label>
-                        <input type="text" class="form-control @error('saleCost') is-invalid @enderror" name="saleCost" value="{{ old('saleCost') }}" placeholder="19.99" id="formProductSale" />
+                        <input type="text" class="form-control @error('saleCost') is-invalid @enderror" name="saleCost" value="{{ old('saleCost', $product->saleCost) }}" placeholder="19.99" id="formProductSale" />
                         @error('saleCost')
                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -48,7 +55,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductQuantity">Quantity</label>
-                        <input type="text" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity') }}" placeholder="1" id="formProductQuantity" />
+                        <input type="text" class="form-control @error('quantity') is-invalid @enderror" name="quantity" value="{{ old('quantity', $product->quantity) }}" placeholder="1" id="formProductQuantity" />
                         @error('quantity')
                         <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -58,7 +65,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductDesc">Opis</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Opis przedmiotu" id="formProductDesc">{{ old('description') }}</textarea>
+                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" placeholder="Opis przedmiotu" id="formProductDesc">{{ old('description', $product->description) }}</textarea>
                         @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -73,7 +80,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductImage">Zdjęcie</label>
-                        <input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image') }}" placeholder="Ścieżka do pliku..." id="formProductImage" />
+                        <input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image', $product->image) }}" placeholder="Ścieżka do pliku..." id="formProductImage" />
                         @error('image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductAddRequest;
+use App\Http\Requests\ProductRemoveRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EditController extends Controller
 {
@@ -16,7 +18,8 @@ class EditController extends Controller
     }
 
     public function addProductView() {
-        return view('edit.addProduct');
+        $product = new Product();
+        return view('edit.addProduct', ['product' => $product]);
     }
 
     public function updateView($productId) {
@@ -33,8 +36,15 @@ class EditController extends Controller
 
     public function update(ProductUpdateRequest $request) {
         $validated = $request->validated();
-        $product = Product::findOrFail($validated->id);
+        $product = Product::findOrFail($validated['id']);
         $product->update($validated);
-        return redirect()->route('edit.update.index', ['productId' => $validated->id])->with('success', 'Product updated successfully');
+        return redirect()->route('edit.update.index', ['productId' => $product->id])->with('success', 'Product updated successfully');
+    }
+
+    public function remove(ProductRemoveRequest $request) {
+        $validated = $request->validated();
+        $product = Product::findOrFail($validated['id']);
+        $product->delete();
+        return redirect()->route('edit.index')->with('success', 'Product removed successfully');
     }
 }

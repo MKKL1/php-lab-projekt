@@ -1,10 +1,48 @@
 @extends('layouts.app')
 @push('header')
     @vite('resources/sass/edit.scss')
+    <script type="module">
+        let modal = new bootstrap.Modal(document.getElementById('confirmModal'))
+        function removeProduct(id) {
+            $('#formProductId').attr('value', id);
+            modal.show();
+        }
+        window.removeProduct = removeProduct;
+    </script>
 @endpush
 @section('content')
 
+    <div id="confirmModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Do you want to remove </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                    <form method="post" action="{{route('edit.remove')}}" class="form">
+                        @csrf
+                        <input id="formProductId" type="hidden" name="id" autocomplete="off" value="">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
+        @if(session()->has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{session()->get('success')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+        @endif
         <div class="row">
             <div class="col-12 mb-3 mb-lg-5">
                 <div class="overflow-hidden card table-nowrap table-card">
@@ -40,22 +78,16 @@
                                     <td>{{$product->id}}</td>
                                     <td><span class="d-inline-block align-middle">{{$product->realPrice()}} zł</span></td>
                                     <td class="text-end">
-                                        <div class="drodown">
-                                            <a data-bs-toggle="dropdown" href="#" class="btn p-1" aria-expanded="false">
-                                                <i class="fas fa-bars" aria-hidden= "true"></i>
+                                        <span class="d-inline-block align-middle">
+                                            <a href="{{route('edit.update.index', $product->id)}}" class="btn btn-primary justify-content-between me-2">
+                                                <i class="fas fa-pen"></i>
+{{--                                                <span> Edytuj przedmiot</span>--}}
                                             </a>
-                                            <div class="dropdown-menu dropdown-menu-end" style="">
-                                                <a class="dropdown-item justify-content-between">
-                                                    <i class="fas fa-pen"></i>
-                                                    <span>Edytuj przedmiot</span>
-                                                </a>
-
-                                                <a class="dropdown-item justify-content-between dropdown-red">
-                                                    <i class="fas fa-trash"></i>
-                                                    <span>Usuń przedmiot</span>
-                                                </a>
-                                            </div>
-                                        </div>
+                                            <button onclick="removeProduct('{{$product->id}}')" class="btn btn-danger justify-content-between">
+                                                <i class="fas fa-trash"></i>
+{{--                                                <span> Usuń przedmiot</span>--}}
+                                            </button>
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

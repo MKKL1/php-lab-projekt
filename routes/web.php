@@ -52,13 +52,16 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
             Route::get('/edit/add', 'EditController@addProductView')->name('edit.add.index');
             Route::get('/edit/update/{productId}', 'EditController@updateView')->name('edit.update.index');
 
-            Route::post('/edit/update/{productId}', 'EditController@update')
+            Route::post('/edit/update/{productId}', 'EditController@update') //TODO is productId even needed?
                 ->can('update-products') //TODO not needed
                 ->name('edit.update');
 
             Route::post('/edit/add', 'EditController@add')
                 ->can('add-products') //TODO not needed
                 ->name('edit.add');
+
+            Route::post('/edit/remove', 'EditController@remove')
+                ->name('edit.remove');
         });
 
 
