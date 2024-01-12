@@ -6,10 +6,10 @@ use App\Facades\ShoppingCart;
 use App\Http\Requests\CartAddRequest;
 use App\Http\Requests\CartRemoveRequest;
 use App\Http\Requests\CartUpdateRequest;
+use App\Models\Cart;
 use App\Models\Product;
-use App\Providers\ShoppingCartServiceProvider;
 use DateTime;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -17,17 +17,15 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = ShoppingCart::getCart();
-        $price = $cart->price();
-        $data = [];
-        foreach ($cart as $key => $value) {
-            $data[$key] = ['product' => Product::find($value['productId']), 'quantity' => $value['quantity']];
-        }
+        $cart = Auth::user()->cart;
         $expectedDeliveryStart = new DateTime();
         $expectedDeliveryStart->modify('+1 day');
         $expectedDeliveryEnd = new DateTime();
         $expectedDeliveryEnd->modify('+3 day');
-        return view('cart' , ['cartData' => $data, 'price' => $price,'expectedDeliveryStart' => $expectedDeliveryStart,'expectedDeliveryEnd' => $expectedDeliveryEnd]);
+        return view('cart' , [
+            'cart' => $cart,
+            'expectedDeliveryStart' => $expectedDeliveryStart,
+            'expectedDeliveryEnd' => $expectedDeliveryEnd]);
     }
 
     /**
@@ -57,13 +55,7 @@ class CartController extends Controller
     public function update(CartUpdateRequest $request)
     {
         $validated = $request->validated();
-        $data = [];
-        if(array_key_exists('productId', $validated))
-            $data['productId'] = $validated['productId'];
-        if(array_key_exists('quantity', $validated))
-            $data['quantity'] = $validated['quantity'];
 
-        ShoppingCart::update($validated['id'], $data);
         return response()->json(['success' => true]);
     }
 }

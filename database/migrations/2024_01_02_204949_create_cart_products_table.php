@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('cart_id');
             $table->foreignId('product_id');
+            $table->integer('quantity')->default(0);
 
             $table->foreign('cart_id')
                 ->references('id')

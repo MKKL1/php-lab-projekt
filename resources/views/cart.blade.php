@@ -69,7 +69,7 @@
                     <div class="cart-products card-body">
 
 
-                        @foreach($cartData as $id => $value)
+                        @foreach($cart->products as $id => $value)
                             @php
                                 $product = $value['product'];
                             @endphp
@@ -101,10 +101,6 @@
                                     <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                                         <h6 class="mb-0">{{$product->realPrice()}} zł</h6>
                                     </div>
-{{--                                    <button class="col-md-1 col-lg-1 col-xl-1 text-end">--}}
-{{--                                        <a href="#!" class="text-muted"><i class="bi bi-x"></i></a>--}}
-{{--                                    </button>--}}
-
                                     <button onclick="remove(this)" class="btn px-2 col-md-1 col-lg-1 col-xl-1">
                                         <i class="fas fa-x"></i>
                                     </button>
