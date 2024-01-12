@@ -33,11 +33,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::get('products', 'ProductController@paginate')->name('products');
     Route::get('product/{productId}', 'ProductController@show')->name('product');
 
-    Route::get('/cart', 'CartController@index')->name('cart.index');
-    Route::post('/cart/add', 'CartController@add')->name('cart.add');
-    Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
-    Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
-    Route::post('/cart/update', 'CartController@update')->name('cart.update');
+
 
 
     Route::group(['middleware' => ['guest']], function() {
@@ -64,7 +60,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
                 ->name('edit.remove');
         });
 
+        Route::get('/cart', 'CartController@index')->name('cart.index');
 
+//        Route::post('/cart/add', 'CartController@add')->name('cart.add');
+//        Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
+//        Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+        Route::post('/cart/update', 'CartController@update')->name('cart.update');
     });
 
 
