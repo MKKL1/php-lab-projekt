@@ -61,7 +61,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
         });
 
         Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
-        Route::get('/checkout/order', 'CheckoutController@order')->name('checkout.order');
+        Route::post('/checkout/order', 'CheckoutController@order')->name('checkout.order');
+        Route::get('/orders', 'OrderController@index')->name('orders.index');
 
         Route::get('/cart', 'CartController@index')->name('cart.index');
         Route::post('/cart/set', 'CartController@set')->name('cart.set');

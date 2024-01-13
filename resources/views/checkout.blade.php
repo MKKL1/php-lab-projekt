@@ -9,7 +9,7 @@
                             <h5 class="mb-0">Dane odbiorcy</h5>
                         </div>
                         <div class="card-body">
-                            <form id="checkoutForm" method="POST" action="{{ route('login') }}">
+                            <form id="checkoutForm" method="POST" action="{{ route('checkout.order') }}">
                                 @csrf
                                 <div class="form-outline mb-4">
                                     <input type="text"

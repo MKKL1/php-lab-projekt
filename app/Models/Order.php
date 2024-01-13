@@ -24,4 +24,18 @@ class Order extends Model
             ->withPivot('cost')
             ->withTimestamps();
     }
+
+    public function productsMessage(): string
+    {
+        return $this->products()->first()->name . "...";
+    }
+
+    public function productCostSum()
+    {
+        $sum = 0;
+        foreach ($this->products as $product) {
+            $sum += $product->pivot->cost * $product->pivot->quantity;
+        }
+        return $sum;
+    }
 }

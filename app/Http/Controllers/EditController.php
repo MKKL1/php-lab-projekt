@@ -6,9 +6,7 @@ use App\Http\Requests\ProductAddRequest;
 use App\Http\Requests\ProductRemoveRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class EditController extends Controller
 {

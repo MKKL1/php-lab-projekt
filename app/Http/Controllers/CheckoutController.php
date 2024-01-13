@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\OrderCreateRequest;
 use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
@@ -26,13 +27,29 @@ class CheckoutController extends Controller
         ]);
     }
 
-    public function order()
+    public function order(OrderCreateRequest $request)
     {
+        $validated = $request->validated();
         $cart = Auth::user()->cart;
-        if(!$cart->exists()) return redirect()->route('cart.index')->with('error', 'Cart is empty');
+        if(!isset($cart) || !$cart->exists()) return redirect()->route('cart.index')->with('error', 'Cart is empty');
         $products = $cart->products;
         if($products->isEmpty()) return redirect()->route('cart.index')->with('error', 'Cart is empty');
+        $products = $cart->products;
         $cart->products()->detach();
-        return redirect()->route('checkout.order.index')->with('success', 'Order placed successfully');
+        $order = Auth::user()->orders()->create([
+            'firstname' => $validated['firstname'],
+            'lastname' => $validated['lastname'],
+            'address' => $validated['address'],
+            'phone' => $validated['phone'],
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        $order->products()->attach($products->mapWithKeys(function ($product) {
+            return [$product->id => [
+                'quantity' => $product->pivot->quantity,
+                'cost' => $product->cost
+            ]];
+        }));
+        return redirect()->route('orders.index')->with('success', 'Order placed successfully');
     }
 }
