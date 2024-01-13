@@ -177,9 +177,9 @@
                                 </li>
                             </ul>
 
-                            <button type="button" class="btn btn-primary btn-lg btn-block">
+                            <a href="{{ route('checkout.index') }}" class="btn btn-primary btn-lg btn-block">
                                 Go to checkout
-                            </button>
+                            </a>
                         </div>
                     </div>
                 </div>

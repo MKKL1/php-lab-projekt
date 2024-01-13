@@ -60,10 +60,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
                 ->name('edit.remove');
         });
 
-        Route::get('/cart', 'CartController@index')->name('cart.index');
+        Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+        Route::get('/checkout/order', 'CheckoutController@order')->name('checkout.order');
 
-//        Route::post('/cart/add', 'CartController@add')->name('cart.add');
-        Route::get('/cart/data', 'CartController@data')->name('cart.data');
+        Route::get('/cart', 'CartController@index')->name('cart.index');
         Route::post('/cart/set', 'CartController@set')->name('cart.set');
         Route::post('/cart/update', 'CartController@update')->name('cart.update');
         Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
