@@ -16,7 +16,7 @@ class Product extends Model
         return $this->saleCost != null;
     }
 
-    function realPrice() {
+    function calculatedPrice() {
         return $this->isOnSale() ? $this->saleCost : $this->cost;
     }
 

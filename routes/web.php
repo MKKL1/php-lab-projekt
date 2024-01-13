@@ -37,12 +37,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
 
 
     Route::group(['middleware' => ['guest']], function() {
-        Route::get('/login', 'LoginController@showLoginForm')->name('auth.login.show');
-        Route::get('/register', 'RegisterController@register')->name('auth.register');
+        Route::get('/login', 'Auth\LoginController@showLoginForm')->name('auth.login.show');
+        Route::get('/register', 'Auth\RegisterController@register')->name('auth.register');
     });
 
     Route::group(['middleware' => ['auth']], function () {
-        Route::post('/logout', 'LogoutController@logout')->name('auth.logout');
+        Route::post('/logout', 'Auth\LogoutController@logout')->name('auth.logout');
         Route::group(['middleware' => ['admin']], function () {
             Route::get('/edit', 'EditController@index')->name('edit.index');
             Route::get('/edit/add', 'EditController@addProductView')->name('edit.add.index');
@@ -63,14 +63,15 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
         Route::get('/cart', 'CartController@index')->name('cart.index');
 
 //        Route::post('/cart/add', 'CartController@add')->name('cart.add');
-//        Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
-//        Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+        Route::get('/cart/data', 'CartController@data')->name('cart.data');
+        Route::post('/cart/set', 'CartController@set')->name('cart.set');
         Route::post('/cart/update', 'CartController@update')->name('cart.update');
+        Route::post('/cart/remove', 'CartController@remove')->name('cart.remove');
     });
 
 
 });
-
+Auth::routes();
 
 Route::get('/session', function() {
     dd(session()->all());
@@ -82,4 +83,4 @@ Route::get('/debug', function() {
     dd(Auth::user()->isAdmin());
 })->name('debug');
 
-Auth::routes();
+

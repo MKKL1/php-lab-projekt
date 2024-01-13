@@ -3,10 +3,12 @@
     @vite('resources/sass/edit.scss')
     <script type="module">
         let modal = new bootstrap.Modal(document.getElementById('confirmModal'))
+
         function removeProduct(id) {
             $('#formProductId').attr('value', id);
             modal.show();
         }
+
         window.removeProduct = removeProduct;
     </script>
 @endpush
@@ -66,9 +68,12 @@
                                     <td>
                                         <div class="d-flex align-items-center">
                                             @if($product->image)
-                                                <img class="thumbnail me-3 rounded flex-shrink-0" src="{{$product->image}}" alt="Product">
+                                                <img class="thumbnail me-3 rounded flex-shrink-0"
+                                                     src="{{$product->image}}" alt="Product">
                                             @else
-                                                <img class="thumbnail me-3 rounded flex-shrink-0" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Product">
+                                                <img class="thumbnail me-3 rounded flex-shrink-0"
+                                                     src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
+                                                     alt="Product">
                                             @endif
                                             <div>
                                                 <div class="h6 mb-0 lh-1">{{$product->name}}</div>
@@ -76,14 +81,18 @@
                                         </div>
                                     </td>
                                     <td>{{$product->id}}</td>
-                                    <td><span class="d-inline-block align-middle">{{$product->realPrice()}} zł</span></td>
+                                    <td>
+                                        <span class="d-inline-block align-middle">{{$product->calculatedPrice()}} zł</span>
+                                    </td>
                                     <td class="text-end">
                                         <span class="d-inline-block align-middle">
-                                            <a href="{{route('edit.update.index', $product->id)}}" class="btn btn-primary justify-content-between me-2">
+                                            <a href="{{route('edit.update.index', $product->id)}}"
+                                               class="btn btn-primary justify-content-between me-2">
                                                 <i class="fas fa-pen"></i>
 {{--                                                <span> Edytuj przedmiot</span>--}}
                                             </a>
-                                            <button onclick="removeProduct('{{$product->id}}')" class="btn btn-danger justify-content-between">
+                                            <button onclick="removeProduct('{{$product->id}}')"
+                                                    class="btn btn-danger justify-content-between">
                                                 <i class="fas fa-trash"></i>
 {{--                                                <span> Usuń przedmiot</span>--}}
                                             </button>
