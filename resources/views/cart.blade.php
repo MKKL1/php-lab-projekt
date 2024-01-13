@@ -65,13 +65,21 @@
     </script>
 @endpush
 @section('content')
+
+    @if(session()->has('error'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> {{session()->get('error')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+    @endif
     <section class="h-100 gradient-custom">
         <div class="container py-5">
             <div class="row d-flex justify-content-center my-4">
                 <div class="col-md-8">
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h5 class="mb-0">Cart - items</h5>
+                            <h5 class="mb-0">Koszyk - {{$cart->products->count()}} przedmiotów</h5>
                         </div>
                         <div class="cart-products card-body">
 
@@ -147,38 +155,35 @@
                 <div class="col-md-4">
                     <div class="card mb-4">
                         <div class="card-header py-3">
-                            <h5 class="mb-0">Summary</h5>
+                            <h5 class="mb-0">Podsumowanie</h5>
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    Products
+                                    Cena
                                     <span><div id="productPrice">{{$totalCost}} zł</div></span>
                                 </li>
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                                    Including discount
+                                    Cena z rabatem
                                     <span><div id="productPrice">{{$totalSaleCost}} zł</div></span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                                    Shipping
+                                    Wysyłka
                                     <span>0 zł</span>
                                 </li>
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                     <div>
-                                        <strong>Total amount</strong>
-                                        <strong>
-                                            <p class="mb-0">(including VAT)</p>
-                                        </strong>
+                                        <strong>Całkowity koszt</strong>
                                     </div>
-                                    <span><strong><div id="totalPrice">{{$totalSaleCost * 1.3}} zł</div></strong></span>
+                                    <span><strong><div id="totalPrice">{{$totalSaleCost}} zł</div></strong></span>
                                 </li>
                             </ul>
 
-                            <a href="{{ route('checkout.index') }}" class="btn btn-primary btn-lg btn-block">
-                                Go to checkout
+                            <a href="{{ route('checkout.index') }}" class="@if($cart->products->isEmpty()) disabled @endif btn btn-primary btn-lg btn-block">
+                                Dostawa i płatność
                             </a>
                         </div>
                     </div>

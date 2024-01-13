@@ -62,7 +62,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
 
         Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
         Route::post('/checkout/order', 'CheckoutController@order')->name('checkout.order');
-        Route::get('/orders', 'OrderController@index')->name('orders.index');
+        Route::get('/orders', 'OrderController@ordersIndex')->name('orders.index');
+        Route::get('/order/{orderId}', 'OrderController@index')->name('order.index');
 
         Route::get('/cart', 'CartController@index')->name('cart.index');
         Route::post('/cart/set', 'CartController@set')->name('cart.set');

@@ -24,6 +24,7 @@
                                 <th>Data</th>
                                 <th>Produkty</th>
                                 <th>Cena</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="products">
@@ -38,6 +39,15 @@
                                     </td>
                                     <td>
                                         <span class="d-inline-block align-middle">{{$order->productCostSum()}}</span>
+                                    </td>
+
+                                    <td class="text-end">
+                                        <span class="d-inline-block align-middle">
+                                            <a href="{{ route('order.index', $order->id) }}"
+                                               class="btn btn-primary justify-content-between me-2">
+                                                <i class="fas fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                        </span>
                                     </td>
                                 </tr>
                             @endforeach

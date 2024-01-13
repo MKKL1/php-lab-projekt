@@ -37,33 +37,33 @@
 
                     <ul class="navbar-nav w-100 justify-content-center">
                         <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteNamed('home') ? 'active' : '' }}" aria-current="page" href="{{route('home')}}">Home</a>
+                            <a class="nav-link {{ Route::currentRouteNamed('home') ? 'active' : '' }}" aria-current="page" href="{{route('home')}}">Strona główna</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link {{ Route::currentRouteNamed('products') ? 'active' : '' }}" aria-current="page" href="{{route('products')}}">Products</a>
+                            <a class="nav-link {{ Route::currentRouteNamed('products') ? 'active' : '' }}" aria-current="page" href="{{route('products')}}">Produkty</a>
                         </li>
 
                         @guest
                             <li class="nav-item {{ Route::currentRouteNamed('auth.login') ? 'active' : '' }}">
-                                <a class="nav-link" aria-current="page" href="{{route('login')}}">Login</a>
+                                <a class="nav-link" aria-current="page" href="{{route('login')}}">Logowanie</a>
                             </li>
 
                             <li class="nav-item {{ Route::currentRouteNamed('auth.register') ? 'active' : '' }}">
-                                <a class="nav-link" aria-current="page" href="{{route('register')}}">Register</a>
+                                <a class="nav-link" aria-current="page" href="{{route('register')}}">Rejestracja</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     {{Auth::user()->name}}
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
-                                    <li><a class="dropdown-item" href="#">Settings</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('orders.index') }}">Historia zamówień</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        Wyloguj
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -73,7 +73,7 @@
                             </li>
                             @can('update-products')
                                 <li class="nav-item">
-                                    <a class="nav-link {{ Route::currentRouteNamed('edit.index') ? 'active' : '' }}" aria-current="page" href="{{route('edit.index')}}">Edit</a>
+                                    <a class="nav-link {{ Route::currentRouteNamed('edit.index') ? 'active' : '' }}" aria-current="page" href="{{route('edit.index')}}">Edycja przedmiotów</a>
                                 </li>
                             @endcan
                         @endguest
