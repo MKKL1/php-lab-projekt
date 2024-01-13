@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-{{--TODO bad idea https://stackoverflow.com/questions/51667233/single-form-for-insert-and-update-data--}}
 @section('content')
     @if(session()->has('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">

@@ -79,11 +79,14 @@
                         @endguest
                     </ul>
                     <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                        <li class="nav-item">
-                            <a href="{{route('cart.index')}}" class="btn btn-outline-light d-inline-flex">
-                                <i class="fas fa-cart-shopping me-1 mt-1"></i>Koszyk
-                            </a>
-                        </li>
+                        @guest
+                        @else
+                            <li class="nav-item">
+                                <a href="{{route('cart.index')}}" class="btn btn-outline-light d-inline-flex">
+                                    <i class="fas fa-cart-shopping me-1 mt-1"></i>Koszyk
+                                </a>
+                            </li>
+                        @endguest
                     </ul>
                 </div>
             </div>

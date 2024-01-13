@@ -9,20 +9,21 @@ class CartUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|uuid',
-            'productId' => 'exists:products,id',
-            'quantity' => 'int|min:1'
+            'items' => ['array'],
+            'items.*.productId' => ['required', 'integer', 'exists:products,id'],
+            'items.*.quantity' => ['required', 'integer', 'min:1']
         ];
     }
 
     public function messages(): array
     {
         return [
-            'id.required' => 'Id is required',
-            'id.uuid' => 'Id must be a valid uuid',
-            'productId.exists' => 'Product does not exist',
-            'quantity.int' => 'Quantity must be an integer',
-            'quantity.min' => 'Quantity must be at least 1'
+            'items.*.productId.required' => 'Product ID is required',
+            'items.*.productId.integer' => 'Product ID must be an integer',
+            'items.*.productId.exists' => 'Product ID must exist in the database',
+            'items.*.quantity.required' => 'Quantity is required',
+            'items.*.quantity.integer' => 'Quantity must be an integer',
+            'items.*.quantity.min' => 'Quantity must be at least 1'
         ];
     }
 

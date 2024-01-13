@@ -9,15 +9,16 @@ class CartRemoveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|uuid'
+            'productId' => 'required|int|exists:products,id'
         ];
     }
 
     public function messages(): array
     {
         return [
-            'id.required' => 'Id is required',
-            'id.uuid' => 'Id must be a valid uuid'
+            'productId.required' => 'Product ID is required',
+            'productId.int' => 'Product ID must be an integer',
+            'productId.exists' => 'Product ID must exist in the database'
         ];
     }
 

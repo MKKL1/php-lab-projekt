@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\ShoppingCart;
-use App\Http\Requests\CartAddRequest;
 use App\Http\Requests\CartRemoveRequest;
 use App\Http\Requests\CartUpdateRequest;
-use App\Models\Product;
-use App\Providers\ShoppingCartServiceProvider;
+use App\Models\Cart;
+use Carbon\Carbon;
 use DateTime;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -17,53 +15,72 @@ class CartController extends Controller
 
     public function index()
     {
-        $cart = ShoppingCart::getCart();
-        $price = $cart->price();
-        $data = [];
-        foreach ($cart as $key => $value) {
-            $data[$key] = ['product' => Product::find($value['productId']), 'quantity' => $value['quantity']];
+        if(Auth::user()->cart()->exists()) {
+            $cart = Auth::user()->cart;
+        } else {
+            $cart = new Cart();
         }
+
+        $products = $cart->products;
+        $totalCost = 0;
+        $totalSaleCost = 0;
+        foreach($products as $product) {
+            $totalCost += $product->cost * $product->pivot->quantity;
+            $totalSaleCost += $product->calculatedPrice() * $product->pivot->quantity;
+        }
+
+        //$cart = Auth::user()->cart;
         $expectedDeliveryStart = new DateTime();
         $expectedDeliveryStart->modify('+1 day');
         $expectedDeliveryEnd = new DateTime();
         $expectedDeliveryEnd->modify('+3 day');
-        return view('cart' , ['cartData' => $data, 'price' => $price,'expectedDeliveryStart' => $expectedDeliveryStart,'expectedDeliveryEnd' => $expectedDeliveryEnd]);
-    }
-
-    /**
-     * Add one product to the cart.
-     */
-    public function add(CartAddRequest $request)
-    {
-        $validated = $request->validated();
-        $id = uuid_create();
-        ShoppingCart::add($id, $validated['productId'], $validated['quantity']);
-        return response()->json(['success' => true, 'id' => $id]);
+        return view('cart' , [
+            'cart' => $cart,
+            'totalCost' => $totalCost,
+            'totalSaleCost' => $totalSaleCost,
+            'expectedDeliveryStart' => $expectedDeliveryStart,
+            'expectedDeliveryEnd' => $expectedDeliveryEnd
+        ]);
     }
 
     public function remove(CartRemoveRequest $request)
     {
         $validated = $request->validated();
-        $removed = ShoppingCart::remove($validated['id']);
-        return response()->json(['success' => true, 'removed' => $removed]);
+        $detached = Auth::user()->cart->products()->detach($validated['productId']);
+        if($detached > 0) {
+            return response()->json(['success' => true]);
+        }
+        return response()->json(['success' => false]);
     }
 
-    public function clear()
+    public function set(CartUpdateRequest $request)
     {
-        ShoppingCart::clear();
+        $validated = $request->validated();
+        $this->sync($validated);
         return response()->json(['success' => true]);
     }
 
     public function update(CartUpdateRequest $request)
     {
         $validated = $request->validated();
-        $data = [];
-        if(array_key_exists('productId', $validated))
-            $data['productId'] = $validated['productId'];
-        if(array_key_exists('quantity', $validated))
-            $data['quantity'] = $validated['quantity'];
-
-        ShoppingCart::update($validated['id'], $data);
+        $this->sync($validated, false);
         return response()->json(['success' => true]);
+    }
+
+    private function sync($validated, $detach = true) {
+        $data = [];
+        foreach ($validated['items'] as $productArray) {
+            $data[$productArray['productId']] = ['quantity' => $productArray['quantity']];
+        }
+        error_log(json_encode($data));
+        $user = Auth::user();
+        if(!$user->cart()->exists()) {
+            $user->cart()->create([
+                'user_id' => $user->id,
+                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now()
+            ]);
+        }
+        Auth::user()->cart->products()->sync($data, $detach);
     }
 }

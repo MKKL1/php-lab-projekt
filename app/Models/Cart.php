@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Cart extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'user_id'
+    ];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -18,6 +20,8 @@ class Cart extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'cart_products', 'cart_id', 'product_id');
+        return $this
+            ->belongsToMany(Product::class, 'cart_products', 'cart_id', 'product_id')
+            ->withPivot('quantity');
     }
 }

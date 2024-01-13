@@ -16,12 +16,14 @@ class Product extends Model
         return $this->saleCost != null;
     }
 
-    function realPrice() {
+    function calculatedPrice() {
         return $this->isOnSale() ? $this->saleCost : $this->cost;
     }
 
     public function carts(): BelongsToMany
     {
-        return $this->belongsToMany(Cart::class, 'cart_products', 'product_id', 'cart_id');
+        return $this
+            ->belongsToMany(Cart::class, 'cart_products', 'product_id', 'cart_id')
+            ->withPivot('quantity');
     }
 }

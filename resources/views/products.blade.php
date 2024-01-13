@@ -6,13 +6,17 @@
         $(".cart-button").one("click", function() {
             const button = $(this);
             $.ajax({
-                url: "{{route('cart.add')}}",
+                url: "{{route('cart.update')}}",
                 method: "POST",
                 data: {
-                    productId: $(this).attr('productId'),
-                    quantity: 1,
+                    items: [
+                        {
+                            productId: $(this).attr('productId'),
+                            quantity: 1,
+                        }
+                    ],
                     _token: '{{csrf_token()}}'
-                },
+                    },
                 success: function (response) {
                     console.log(response);
                     button.addClass('bought').text('Dodano do koszyka').prop('disabled', true);

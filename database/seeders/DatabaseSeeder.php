@@ -44,9 +44,12 @@ class DatabaseSeeder extends Seeder
          $products = Product::all();
 
          Cart::all()->each(function ($cart) use ($products) {
-             $cart->products()->attach(
-                 $products->random(rand(1,3))->pluck('id')->toArray()
-             );
+             $productIds = $products->random(rand(1,3))->pluck('id')->toArray();
+             $toAttach = [];
+             foreach ($productIds as $productId) {
+                 $toAttach[$productId] = ['quantity' => rand(1, 5)];
+             }
+             $cart->products()->attach($toAttach);
          });
     }
 }
