@@ -20,6 +20,13 @@ class Product extends Model
         return $this->isOnSale() ? $this->saleCost : $this->cost;
     }
 
+    public function orders(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id')
+            ->withPivot('quantity');
+    }
+
     public function carts(): BelongsToMany
     {
         return $this

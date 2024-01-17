@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -13,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $products = Cache::remember('products', 10, function () {
+            error_log("New value");
+            return Product::withCount('orders')
+                ->orderByDesc('orders_count')
+                ->take(10)
+                ->get();
+        });
+        return view('home', ['products' => $products]);
     }
 }

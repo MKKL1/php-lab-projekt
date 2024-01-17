@@ -1,4 +1,4 @@
-@import 'bootstrap/scss/bootstrap';
+
 
 
 .ratings i{
@@ -49,5 +49,6 @@ $mynewcolor: #14e15b;
 
 .bought {
     transition: all 1s ease;
+    @import 'bootstrap/scss/bootstrap';
     @include button-variant($mynewcolor, $mynewcolor, white);
 }

@@ -19,10 +19,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
 //Route::controller(ProductController::class)->group(function () {
 //    Route::get('/products/{page?}', 'paginate');
 //})->name('products');
@@ -30,8 +26,10 @@ Route::get('/', function () {
 
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
 
-    Route::get('products', 'ProductController@paginate')->name('products');
-    Route::get('product/{productId}', 'ProductController@show')->name('product');
+    Route::get('/', 'HomeController@index')->name('home');
+
+    Route::get('/products', 'ProductController@paginate')->name('products');
+    Route::get('/product/{productId}', 'ProductController@show')->name('product');
 
 
 
