@@ -14,7 +14,7 @@ class ProductAddRequest extends FormRequest
             'saleCost' => ['nullable', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:0'],
             'description' => ['nullable'],
-            'image' => ['required'],
+            'image' => ['required', 'file', 'image'],
         ];
     }
 
@@ -31,6 +31,7 @@ class ProductAddRequest extends FormRequest
             'quantity.integer' => 'Quantity must be an integer',
             'quantity.min' => 'Quantity must be at least 0',
             'image.required' => 'Image is required',
+            //TODO wiadomosci
         ];
     }
 

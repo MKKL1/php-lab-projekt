@@ -28,14 +28,31 @@ class EditController extends Controller
     public function add(ProductAddRequest $request)
     {
         $validated = $request->validated();
-        Product::create($validated);
+        $imagePath = $request->file('image')->store('productImages');
+        Product::create([
+            'name' => $validated['name'],
+            'cost' => $validated['cost'],
+            'saleCost' => $validated['saleCost'],
+            'quantity' => $validated['quantity'],
+            'description' => $validated['description'],
+            'image' => $imagePath
+        ]);
         return redirect()->route('edit.add.index')->with('success', 'Product added successfully');
     }
 
     public function update(ProductUpdateRequest $request) {
         $validated = $request->validated();
         $product = Product::findOrFail($validated['id']);
-        $product->update($validated);
+        //TODO remove old or replace
+        $imagePath = $request->file('image')->store('productImages');
+        $product->update([
+            'name' => $validated['name'],
+            'cost' => $validated['cost'],
+            'saleCost' => $validated['saleCost'],
+            'quantity' => $validated['quantity'],
+            'description' => $validated['description'],
+            'image' => $imagePath//TODO if null don't update
+        ]);
         return redirect()->route('edit.update.index', ['productId' => $product->id])->with('success', 'Product updated successfully');
     }
 
