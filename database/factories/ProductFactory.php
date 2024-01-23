@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
@@ -18,7 +19,7 @@ class ProductFactory extends Factory
             'saleCost' => rand(0,99) < 20 ? fake()->randomFloat(2, 0, 50) : null,
             'quantity' => fake()->randomNumber(2),
             'description' => fake()->text(),
-            'image' => fake()->imageUrl(),
+            'image_id' => Image::inRandomOrder()->first()->id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

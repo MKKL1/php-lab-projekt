@@ -69,7 +69,7 @@
                                         <div class="d-flex align-items-center">
                                             @if($product->image)
                                                 <img class="thumbnail me-3 rounded flex-shrink-0"
-                                                     src="{{$product->image}}" alt="Product">
+                                                     src="{{$product->image->url()}}" alt="Product">
                                             @else
                                                 <img class="thumbnail me-3 rounded flex-shrink-0"
                                                      src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"

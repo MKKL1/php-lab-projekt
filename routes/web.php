@@ -80,7 +80,7 @@ Route::get('/cartdata', function() {
     dd(\App\Facades\ShoppingCart::getCart());
 })->name('cartdata');
 Route::get('/debug', function() {
-    dd(Auth::user()->isAdmin());
+    dd(Product::all()->first()->image->url());
 })->name('debug');
 
 

@@ -65,7 +65,7 @@
                                 <div class="col-md-3 mt-1 fill">
                                     <a href="{{route('product', ['productId' => $product])}}">
                                     @if($product->image)
-                                        <img class="img-fluid img-responsive rounded product-image" src="{{$product->image}}" alt="Product">
+                                        <img class="img-fluid img-responsive rounded product-image" src="{{$product->image->url()}}" alt="Product">
                                     @else
                                         <img class="img-fluid img-responsive rounded product-image" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Product">
                                     @endif

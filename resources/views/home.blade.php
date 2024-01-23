@@ -22,7 +22,7 @@
                             @endif
                             <!-- Product image-->
                             @if($product->image)
-                                <img class="card-img-top img img-responsive" src="{{$product->image}}" alt="..." />
+                                <img class="card-img-top img img-responsive" src="{{$product->image->url()}}" alt="..." />
                             @else
                                 <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Product">
                             @endif

@@ -14,7 +14,10 @@ return new class extends Migration {
             $table->decimal('saleCost')->nullable();
             $table->integer('quantity');
             $table->string('description')->nullable();
-            $table->string('image');
+            $table->foreignId('image_id');
+            $table->foreign('image_id')
+                ->references('id')
+                ->on('images');
             $table->timestamps();
         });
     }
