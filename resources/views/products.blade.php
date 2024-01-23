@@ -32,6 +32,31 @@
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-center row">
             <div class="col-md-10">
+                <div class="card md-2">
+                    <div class="card-body">
+                            <form class="row d-flex justify-content-between align-items-center"
+                                  method="GET"
+                                  action="{{ route('products') }}">
+                                <div class="col-md-2 col-lg-2 col-xl-2 d-inline-flex">
+                                    <label for="sort-select">Sortuj</label>
+                                    <select id="sort-select" name="sort" class="form-select">
+                                        <option value="" selected></option>
+                                        <option value="maxcost">Od największego kosztu</option>
+                                        <option value="mincost">Od najmniejszego kosztu</option>
+                                    </select>
+                                </div>
+
+                                <input type="hidden" name="page" value="{{$paginator->currentPage()}}">
+                                <div class="col-md-2 col-lg-2 col-xl-2">
+                                    <button type="submit" name="submit" class="btn btn-primary justify-content-between me-2">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </div>
+
+                            </form>
+
+                    </div>
+                </div>
                 <div id="shopProducts">
 
                     @foreach($paginator as $product)
@@ -79,7 +104,7 @@
                     @endforeach
                 </div>
 
-                {{ $paginator->links('pagination.default') }}
+                {{ $paginator->withQueryString()->links('pagination.default') }}
 
 
 
