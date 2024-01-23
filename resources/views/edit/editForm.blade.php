@@ -79,7 +79,7 @@
 
                     <div class="mb-3">
                         <label class="col-form-label" for="formProductImage">Zdjęcie</label>
-                        <input type="text" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ old('image', $product->image) }}" placeholder="Ścieżka do pliku..." id="formProductImage" />
+                        <input type="file" class="form-control @error('image') is-invalid @enderror" name="image" id="formProductImage" accept="image/*"/>
                         @error('image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
