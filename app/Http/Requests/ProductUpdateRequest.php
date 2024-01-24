@@ -15,7 +15,7 @@ class ProductUpdateRequest extends FormRequest
             'saleCost' => ['nullable', 'numeric', 'min:0'],
             'quantity' => ['required', 'integer', 'min:0'],
             'description' => ['nullable'],
-            'image' => ['nullable', 'file', 'image'],
+            'image' => ['nullable', 'image', 'max:4096'],
         ];
     }
 
@@ -34,7 +34,8 @@ class ProductUpdateRequest extends FormRequest
             'quantity.integer' => 'Quantity must be an integer',
             'quantity.min' => 'Quantity must be at least 0',
             'image.required' => 'Image is required',
-            //TODO wiadomosci
+            'image.image' => 'Must be an image',
+            'image.size' => 'Image size must be less than 4MB'
         ];
     }
 

@@ -19,7 +19,7 @@
     <div class="container mt-5 mb-5">
         <div class="d-flex justify-content-center row">
             <div class="col-md-10">
-                <form method="post" action="@yield('action')" class="form">
+                <form method="post" action="@yield('action')" class="form" enctype="multipart/form-data">
                     @csrf
                     @yield('input')
                     <div class="mb-3">

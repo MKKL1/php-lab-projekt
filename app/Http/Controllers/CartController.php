@@ -53,13 +53,6 @@ class CartController extends Controller
         return response()->json(['success' => false]);
     }
 
-    public function set(CartUpdateRequest $request)
-    {
-        $validated = $request->validated();
-        $this->sync($validated);
-        return response()->json(['success' => true]);
-    }
-
     public function update(CartUpdateRequest $request)
     {
         $validated = $request->validated();

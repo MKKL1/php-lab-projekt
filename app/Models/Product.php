@@ -12,7 +12,7 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'cost', 'saleCost', 'quantity', 'description', 'image'];
+    protected $fillable = ['name', 'cost', 'saleCost', 'quantity', 'description', 'image_id'];
     function isOnSale(): bool
     {
         return $this->saleCost != null;
