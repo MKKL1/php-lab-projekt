@@ -12,7 +12,13 @@
                             <form method="POST" action="{{ route('login') }}">
                                 @csrf
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="emailInput" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"/>
+                                    <input type="email"
+                                           id="emailInput"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email"
+                                           value="{{ old('email') }}"
+                                           required
+                                           autocomplete="email"/>
                                     <label class="form-label" for="emailInput">Email</label>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -22,7 +28,14 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="passwordInput" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="current-password"/>
+                                    <input type="password"
+                                           id="passwordInput"
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           name="password"
+                                           value="{{ old('password') }}"
+                                           required
+                                           maxlength="25"
+                                           autocomplete="current-password"/>
                                     <label class="form-label" for="passwordInput">Password</label>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">

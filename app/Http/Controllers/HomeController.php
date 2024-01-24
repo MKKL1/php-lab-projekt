@@ -25,8 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Cache::remember('products', 10, function () {
-            error_log("New value");
+        //Zapisz do cache na 60 sekund najcześciej zamawiane produkty
+        $products = Cache::remember('products', 60, function () {
             return Product::withCount('orders')
                 ->orderByDesc('orders_count')
                 ->take(10)

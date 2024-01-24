@@ -47,7 +47,7 @@ class LoginController extends Controller
     {
         $request->validate([
             $this->username() => 'required|string|email|max:255',
-            'password' => 'required|string'
+            'password' => 'required|string|max:25'
         ]);
     }
 

@@ -8,11 +8,18 @@ use App\Http\Requests\ProductRemoveRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EditController extends Controller
 {
     public function index(Request $request) {
-        $page = $request->input('page', 1);
+        $page = 1;
+        $validator = Validator::make($request->all(), [
+            'page' => 'int|min:1'
+        ]);
+        if(!$validator->fails()) {
+            $page = $request->input('page', 1);
+        }
         return view('edit.edit', ['paginator' => Product::paginate(10, ['*'], 'page', $page)]);
     }
 
@@ -22,6 +29,12 @@ class EditController extends Controller
     }
 
     public function updateView($productId) {
+        $validator = Validator::make(['productId' => $productId], [
+            'productId' => 'required|int|exists:products,id'
+        ]);
+        if($validator->fails()) {
+            abort(404);
+        }
         $product = Product::findOrFail($productId);
         return view('edit.updateProduct', ['product' => $product]);
     }

@@ -18,6 +18,7 @@
                                            name="firstname"
                                            value="{{ old('firstname') }}"
                                            placeholder="Imie"
+                                           maxlength="15"
                                            required/>
 
                                     @error('firstname')
@@ -34,6 +35,7 @@
                                            name="lastname"
                                            value="{{ old('lastname') }}"
                                            placeholder="Nazwisko"
+                                           maxlength="15"
                                            required/>
 
                                     @error('lastname')
@@ -50,6 +52,7 @@
                                            name="address"
                                            value="{{ old('address') }}"
                                            placeholder="Adres"
+                                           maxlength="100"
                                            required/>
 
                                     @error('address')
@@ -66,6 +69,7 @@
                                            name="phone"
                                            value="{{ old('phone') }}"
                                            placeholder="Nr telefonu"
+                                           pattern="\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{3})"
                                            required/>
 
                                     @error('phone')

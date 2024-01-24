@@ -13,7 +13,14 @@
                                 @csrf
 
                                 <div class="form-outline mb-4">
-                                    <input type="text" id="nameInput" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{0,19}$"/>
+                                    <input type="text"
+                                           id="nameInput"
+                                           class="form-control @error('name') is-invalid @enderror"
+                                           name="name"
+                                           value="{{ old('name') }}"
+                                           required
+                                           autocomplete="name"
+                                           pattern="^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{0,19}$"/>
                                     <label class="form-label" for="nameInput">Nazwa</label>
                                     @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -23,7 +30,13 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="email" id="emailInput" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email"/>
+                                    <input type="email"
+                                           id="emailInput"
+                                           class="form-control @error('email') is-invalid @enderror"
+                                           name="email"
+                                           value="{{ old('email') }}"
+                                           required
+                                           autocomplete="email"/>
                                     <label class="form-label" for="emailInput">Email</label>
                                     @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -33,7 +46,14 @@
                                 </div>
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="passwordInput" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="new-password"/>
+                                    <input type="password"
+                                           id="passwordInput"
+                                           class="form-control @error('password') is-invalid @enderror"
+                                           name="password"
+                                           value="{{ old('password') }}"
+                                           required
+                                           maxlength="25"
+                                           autocomplete="new-password"/>
                                     <label class="form-label" for="passwordInput">Hasło</label>
                                     @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -44,7 +64,13 @@
 
 
                                 <div class="form-outline mb-4">
-                                    <input type="password" id="passwordConfirmInput" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password"/>
+                                    <input type="password"
+                                           id="passwordConfirmInput"
+                                           class="form-control @error('password_confirmation') is-invalid @enderror"
+                                           name="password_confirmation"
+                                           required
+                                           maxlength="25"
+                                           autocomplete="new-password"/>
                                     <label class="form-label" for="passwordConfirmInput">Potwierdź hasło</label>
                                     @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">

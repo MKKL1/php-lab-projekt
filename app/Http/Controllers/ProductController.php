@@ -10,6 +10,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -21,23 +22,30 @@ class ProductController extends Controller
     public function paginate(ProductsShowRequest $request) {
         $validated = $request->validated();
         $page = $request->has('page') ? $validated['page'] : 1;
-        $table = Product::query();
+        $query = Product::query();
 
         if($request->has('sort')) {
-            $direction = 'asc';
+            $direction = 'ASC';
             switch ($validated['sort']) {
-                case "maxcost": $direction = 'desc'; break; //TODO sort by saleCost as well
-                case "mincost": $direction = 'asc'; break;
+                case "maxcost": $direction = 'DESC'; break; //TODO sort by saleCost as well
+                case "mincost": $direction = 'ASC'; break;
             }
-            $table->orderBy('cost', $direction);
+
+            $query->orderByRaw("COALESCE(saleCost, cost) $direction");
         }
-        $paginator = $table->paginate(10, ['*'], 'page', $page);
+        $paginator = $query->paginate(10, ['*'], 'page', $page);
         return view('products', ['paginator' => $paginator]);
     }
 
 
     public function show($productId)
     {
+        $validator = Validator::make(['productId' => $productId], [
+            'productId' => 'required|int|exists:products,id'
+        ]);
+        if($validator->fails()) {
+            abort(404);
+        }
         $product = Product::findOrFail($productId);
         return view('product', ['product' => $product]);
     }

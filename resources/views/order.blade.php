@@ -55,8 +55,8 @@
                                         <div class="col-md-2 col-lg-2 col-xl-2">
                                             <a href="{{ route('product', $product->id) }}">
                                                 <img
-                                                    src="{{$product->image}}"
-                                                    class="img-fluid rounded-3" alt="Cotton T-shirt">
+                                                    src="{{asset($product->image->url())}}"
+                                                    class="img-fluid rounded-3" alt="Product">
                                             </a>
                                         </div>
                                         <div class="col-md-3 col-lg-3 col-xl-3">
