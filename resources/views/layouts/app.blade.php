@@ -17,7 +17,7 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     @stack('header')
 </head>
-<body class="d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 h-100">
     <div id="app">
         <nav class="navbar navbar-dark navbar-expand-md bg-dark justify-content-center">
             <div class="container-fluid px-4 px-lg-5">
@@ -96,7 +96,7 @@
             @yield('content')
         </main>
 
-        <footer class="py-2 bg-dark mt-auto">
+        <footer class="footer mt-auto py-3 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">KZ&copy;</p></div>
         </footer>
     </div>
