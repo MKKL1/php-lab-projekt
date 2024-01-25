@@ -46,7 +46,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function() {
             Route::get('/edit/update/{productId}', 'EditController@updateView')->name('edit.update.index');
 
             //update product
-            Route::post('/edit/update/{productId}', 'EditController@update') //TODO is productId even needed?
+            Route::post('/edit/update/{productId}', 'EditController@update')
                 ->name('edit.update');
 
             //create product

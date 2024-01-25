@@ -49,7 +49,7 @@
 
 
                             @foreach($order->products as $product)
-                                <div productId="{{$product->id}}" class="productBase">
+                                <div>
                                     <div class="row mb-4 d-flex justify-content-between align-items-center">
 
                                         <div class="col-md-2 col-lg-2 col-xl-2">

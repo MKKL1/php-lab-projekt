@@ -34,8 +34,6 @@
             })
         }
 
-        //TODO Limit server-side as well
-        //TODO: cache and send all at once
         function update_quantity(element) {
             throttleFunction(function () {
                 const base = selectProductBase(element);
@@ -129,26 +127,9 @@
                     </div>
                     <div class="card mb-4">
                         <div class="card-body">
-                            <p><strong>Expected shipping delivery</strong></p>
+                            <p><strong>Oczekiwany czas dostawy</strong></p>
                             <p class="mb-0">{{ $expectedDeliveryStart->format('d.m.Y') }}
                                 - {{ $expectedDeliveryEnd->format('d.m.Y') }}</p>
-                        </div>
-                    </div>
-                    <div class="card mb-4 mb-lg-0">
-                        <div class="card-body">
-                            <p><strong>We accept</strong></p>
-                            <img class="me-2" width="45px"
-                                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
-                                 alt="Visa"/>
-                            <img class="me-2" width="45px"
-                                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
-                                 alt="American Express"/>
-                            <img class="me-2" width="45px"
-                                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
-                                 alt="Mastercard"/>
-                            <img class="me-2" width="45px"
-                                 src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
-                                 alt="PayPal acceptance mark"/>
                         </div>
                     </div>
                 </div>
@@ -162,12 +143,12 @@
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                     Cena
-                                    <span><div id="productPrice">{{$totalCost}} zł</div></span>
+                                    <span>{{$totalCost}} zł</span>
                                 </li>
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                     Cena z rabatem
-                                    <span><div id="productPrice">{{$totalSaleCost}} zł</div></span>
+                                    <span>{{$totalSaleCost}} zł</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     Wysyłka
@@ -178,7 +159,7 @@
                                     <div>
                                         <strong>Całkowity koszt</strong>
                                     </div>
-                                    <span><strong><div id="totalPrice">{{$totalSaleCost}} zł</div></strong></span>
+                                    <span><strong>{{$totalSaleCost}} zł</strong></span>
                                 </li>
                             </ul>
 

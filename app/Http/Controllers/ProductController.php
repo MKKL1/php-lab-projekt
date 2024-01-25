@@ -27,7 +27,7 @@ class ProductController extends Controller
         if($request->has('sort')) {
             $direction = 'ASC';
             switch ($validated['sort']) {
-                case "maxcost": $direction = 'DESC'; break; //TODO sort by saleCost as well
+                case "maxcost": $direction = 'DESC'; break;
                 case "mincost": $direction = 'ASC'; break;
             }
 

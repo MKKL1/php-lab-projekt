@@ -11,7 +11,7 @@
                 data: {
                     items: [
                         {
-                            productId: $(this).attr('productId'),
+                            productId: $(this).attr('data-productId'),
                             quantity: 1,
                         }
                     ],
@@ -40,7 +40,7 @@
                                 <div class="col-md-2 col-lg-2 col-xl-2 d-inline-flex">
                                     <label for="sort-select">Sortuj</label>
                                     <select id="sort-select" name="sort" class="form-select">
-                                        <option value="" selected></option>
+                                        <option value="" selected>-</option>
                                         <option value="maxcost">Od największego kosztu</option>
                                         <option value="mincost">Od najmniejszego kosztu</option>
                                     </select>
@@ -94,7 +94,7 @@
                                     </div>
                                     <h6 class="text-success">Darmowa dostawa od 30zł</h6>
                                     <div class="d-flex flex-column mt-4">
-                                        <button class="cart-button btn btn-outline-primary btn-sm" productId="{{$product->id}}">
+                                        <button class="cart-button btn btn-outline-primary btn-sm" data-productId="{{$product->id}}">
                                             Dodaj do koszyka
                                         </button>
                                     </div>

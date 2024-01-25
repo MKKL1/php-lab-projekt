@@ -33,6 +33,9 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
                 <div class="navbar-collapse collapse w-100" id="navbarSupportedContent">
 
                     <ul class="navbar-nav w-100 justify-content-center">
@@ -60,15 +63,11 @@
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                                     <li><a class="dropdown-item" href="{{ route('orders.index') }}">Historia zamówień</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                    <li class="dropdown-item"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         Wyloguj
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                    </li>
                                 </ul>
                             </li>
                             @can('update-products')

@@ -18,18 +18,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Confirm</h5>
+                    <h5 class="modal-title">Potwierdź</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Do you want to remove </p>
+                    <p>Czy napewno chcesz usunąć ten przedmiot</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Deny</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">X</button>
                     <form method="post" action="{{route('edit.remove')}}" class="form">
                         @csrf
                         <input id="formProductId" type="hidden" name="id" autocomplete="off" value="">
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button type="submit" class="btn btn-primary">Potwierdź</button>
                     </form>
 
                 </div>

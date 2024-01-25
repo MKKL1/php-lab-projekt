@@ -88,7 +88,7 @@
                         </div>
                         <div class="card-body">
                             @foreach($cart->products as $product)
-                                <div productId="{{$product->id}}" class="productBase">
+                                <div>
                                     <div class="row mb-4 d-flex justify-content-between align-items-center">
                                         <div class="col-md-3 col-lg-3 col-xl-3">
                                             <h6 class="text-black mb-0">{{$product->name}}</h6>
@@ -128,12 +128,12 @@
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                     Cena
-                                    <span><div id="productPrice">{{$totalCost}} zł</div></span>
+                                    <span>{{$totalCost}} zł</span>
                                 </li>
                                 <li
                                     class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                                     Cena z rabatem
-                                    <span><div id="productPrice">{{$totalSaleCost}} zł</div></span>
+                                    <span>{{$totalSaleCost}} zł</span>
                                 </li>
                                 <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                                     Wysyłka
@@ -144,7 +144,7 @@
                                     <div>
                                         <strong>Całkowity koszt</strong>
                                     </div>
-                                    <span><strong><div id="totalPrice">{{$totalSaleCost}} zł</div></strong></span>
+                                    <span><strong>{{$totalSaleCost}} zł</strong></span>
                                 </li>
                             </ul>
 
